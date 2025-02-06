@@ -39,7 +39,7 @@ O sistema permite que pacientes agendem consultas médicas online, enquanto os m
 - **Framework**: Express.js para criar a API.
 - **Autenticação**: JWT (JSON Web Tokens) para autenticação de usuários.
 - **Agendamento**: Bibliotecas como `node-schedule` ou `cron` para enviar lembretes automáticos.
-- **Banco de Dados**: MongoDB (para flexibilidade) ou PostgreSQL (para relacionamentos mais complexos).
+- **Banco de Dados**: PostgreSQL (para relacionamentos mais complexos).
 - **API de E-mail/SMS**: Serviços como SendGrid (e-mail) ou Twilio (SMS) para enviar confirmações e lembretes.
 
 ### Frontend (React)
