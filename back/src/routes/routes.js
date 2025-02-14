@@ -1,9 +1,7 @@
 const express = require("express");
-const route = express.Router();
+const routes = express.Router();
+const user_api = require("../api/user-api");
 
-route.get('/', (req, res) => {
-    return res.status(200).send("Rota funcionando!")
-})
+routes.use('/user', user_api);
 
-
-module.exports = route;
+module.exports = routes;
