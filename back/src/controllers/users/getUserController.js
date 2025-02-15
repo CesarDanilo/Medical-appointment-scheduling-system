@@ -1,8 +1,13 @@
-const userControllers = (req, res) => {
+const { Users } = require("../../database/models");
+
+const userControllers = async (req, res) => {
     try {
-        return res.send("API RODANDO NO CONTROLLER");
+        const result = await Users.findAll({
+            atributes: ["id", "name", "email", "password", "role", "createdAt", "updatedAt"]
+        });
+        return res.status(200).res.json({ data: result });
     } catch (error) {
-        return res.status(500).send("API NÃO ESTA FUNCIONANDO")
+        return res.status(400).json({ erro: error.message });
     }
 }
 
