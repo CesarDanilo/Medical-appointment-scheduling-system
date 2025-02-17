@@ -48,7 +48,6 @@ O sistema permite que pacientes agendem consultas médicas online, enquanto os m
 - **Gerenciamento de Estado**: Redux ou Context API para gerenciar o estado da aplicação (como dados do usuário e consultas agendadas).
 
 ### Banco de Dados
-- **MongoDB**: Para armazenar dados como usuários, consultas, horários disponíveis, etc.
 - **PostgreSQL**: Se precisar de relacionamentos mais complexos, como entre médicos, pacientes e consultas.
 
 ### Outras Ferramentas
@@ -105,15 +104,3 @@ O sistema permite que pacientes agendem consultas médicas online, enquanto os m
 - Implementar um sistema de pagamento seguro e confiável, com suporte a diferentes métodos de pagamento.
 
 ## Ideias de Melhoria e Expansão
-
-### Integração com Prontuários Eletrônicos
-- Permitir que médicos registrem diagnósticos e prescrições diretamente no sistema.
-
-### Telemedicina
-- Adicionar funcionalidades de videoconferência para consultas online.
-
-### Aplicativo Mobile
-- Desenvolver um aplicativo mobile (React Native) para facilitar o acesso de pacientes e médicos.
-
-### Inteligência Artificial
-- Usar IA para sugerir horários de consultas com base na disponibilidade do médico e preferências do paciente.
