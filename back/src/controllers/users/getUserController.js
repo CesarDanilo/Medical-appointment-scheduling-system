@@ -3,13 +3,19 @@ const { Op } = require("sequelize");
 
 const userControllers = async (req, res) => {
     try {
-        const { name } = req.query;
+        const { id, name } = req.query;
         const where = {};
 
         // CRIANDO UM WHARE PARA TRAZER POR NOME
         if (name) {
             where.name = {
                 [Op.iLike]: `%${name}%`
+            }
+        }
+
+        if (id) {
+            where.id = {
+                [Op.eq]: id
             }
         }
 
