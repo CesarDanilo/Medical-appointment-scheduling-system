@@ -13,6 +13,7 @@ const userControllers = async (req, res) => {
             }
         }
 
+        // CRIANDO UM WHARE PARA TRAZER POR ID
         if (id) {
             where.id = {
                 [Op.eq]: id
