@@ -9,4 +9,6 @@ routes.get('/:id', userControllers.getuser);
 
 routes.post('/create-user', userControllers.createUser);
 
+routes.put('/:id', userControllers.updateUser);
+
 module.exports = routes;
