@@ -1,9 +1,11 @@
-const getuser = require("./getUserController");
+const readUser = require("./readUserController");
 const createUser = require("./createUserController");
 const updateUser = require("./updateUserController");
+const deleteUser = require("./deleteUserController");
 
 module.exports = {
-    getuser,
+    readUser,
     createUser,
-    updateUser
+    updateUser,
+    deleteUser
 }
