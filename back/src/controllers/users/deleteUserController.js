@@ -1,4 +1,3 @@
-const { where } = require("sequelize");
 const { Users } = require("../../database/models");
 
 const deleteUser = async (req, res) => {
