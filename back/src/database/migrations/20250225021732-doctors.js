@@ -21,7 +21,13 @@ module.exports = {
       bio: {
         type: Sequelize.STRING(500),
         allowNull: false
-      }
+      },
+      createdAt: {
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        type: Sequelize.DATE
+      },
     }
 
   },
