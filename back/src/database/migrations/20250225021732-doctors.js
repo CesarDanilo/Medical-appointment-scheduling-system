@@ -14,7 +14,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      
+      specialty: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+      },
+      bio: {
+        type: Sequelize.STRING(500),
+        allowNull: false
+      }
     }
 
   },
