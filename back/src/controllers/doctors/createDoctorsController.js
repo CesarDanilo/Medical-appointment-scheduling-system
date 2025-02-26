@@ -12,10 +12,16 @@ const createDoctors = async (req, res, next) => {
                 data: req.body  // Enviando o conteúdo dos dados recebidos
             });
         }
+        
         let result;
 
         try {
-            // Tentando criar o Doctors no banco de dados
+            let doctors_id = await Doctors.findByPk(data.user_id);
+
+            if (!doctors_id) {
+                res.status(400).send(`usuario inserido não existe na base de dados! ${data.user_id}`)
+            }
+
             result = await Doctors.create(data);
         } catch (error) {
             const msg = "Não foi possível tentar gravar!";
