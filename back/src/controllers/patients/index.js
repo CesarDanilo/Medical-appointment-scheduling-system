@@ -1,6 +1,6 @@
 const readPatients = require("./readPatientsController");
 const createPatients = require("./createPatientsController");
-const updatePatients = require("./updatePatientsController");
+const updatePatients = require("./updateDoctorsController");
 const deletePatients = require("./deletePatientsController");
 
 module.exports = {
