@@ -7,13 +7,12 @@ module.exports = {
       'doctors', {
 
       id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(255),
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true
       },
       user_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(255),
         allowNull: false
       },
       specialty: {

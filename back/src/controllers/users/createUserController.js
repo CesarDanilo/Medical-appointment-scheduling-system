@@ -1,4 +1,5 @@
 const { Users } = require("../../database/models");
+const { v4: uuidv4 } = require("uuid");
 
 const createUser = async (req, res, next) => {
 
@@ -12,6 +13,10 @@ const createUser = async (req, res, next) => {
                 data: req.body  // Enviando o conteúdo dos dados recebidos
             });
         }
+
+        const userId = uuidv4();
+        data.id = userId;
+
         let result;
 
         try {
