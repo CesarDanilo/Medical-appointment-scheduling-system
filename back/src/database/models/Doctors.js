@@ -7,7 +7,6 @@ module.exports = (sequelize) => {
             // Doctors.hasMany(models.Pedido, { foreignKey: 'usuario_id' });
         }
     }
-
     Doctors.init({
         id: {
             type: DataTypes.INTEGER,
