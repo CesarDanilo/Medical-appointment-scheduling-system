@@ -16,10 +16,10 @@ const createDoctors = async (req, res, next) => {
         let result;
 
         // Usuario que vai ser relacionado como medico se existe recebendo na variavel 
-        let doctors_id = await Doctors.findByPk(data.user_id);
+        let users_id = await Users.findByPk(data.user_id);
 
         // Validando se usuarios existe ou não
-        if (!doctors_id) { return res.status(400).send(`usuario inserido não existe na base de dados! id: ${data.user_id}`) }
+        if (!users_id) { return res.status(400).send(`usuario inserido não existe na base de dados! id: ${data.user_id}`) }
 
         try {
             result = await Doctors.create(data);

@@ -1,4 +1,5 @@
 const { Patients } = require("../../database/models");
+const { Users } = require("../../database/models");
 
 const createPatients = async (req, res, next) => {
 
@@ -16,10 +17,10 @@ const createPatients = async (req, res, next) => {
         let result;
 
         // Usuario que vai ser relacionado como medico se existe recebendo na variavel 
-        let Patients_id = await Patients.findByPk(data.user_id);
+        let users_id = await Users.findByPk(data.user_id);
 
         // Validando se usuarios existe ou não
-        if (!Patients_id) { return res.status(400).send(`usuario inserido não existe na base de dados! id: ${data.user_id}`) }
+        if (!users_id) { return res.status(400).send(`usuario inserido não existe na base de dados! id: ${data.user_id}`) }
 
         try {
             result = await Patients.create(data);
