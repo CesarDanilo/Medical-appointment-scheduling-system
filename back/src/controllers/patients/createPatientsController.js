@@ -1,5 +1,5 @@
-const { Patients } = require("../../database/models");
-const { Users } = require("../../database/models");
+const { Patients, Users } = require("../../database/models");
+const { v4: uuidv4 } = require('uuid');  // Importa a função v4 para gerar UUIDs
 
 const createPatients = async (req, res, next) => {
 
@@ -21,6 +21,9 @@ const createPatients = async (req, res, next) => {
 
         // Validando se usuarios existe ou não
         if (!users_id) { return res.status(400).send(`usuario inserido não existe na base de dados! id: ${data.user_id}`) }
+
+        const patients_id = uuidv4();
+        data.id = patients_id;
 
         try {
             result = await Patients.create(data);
