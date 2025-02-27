@@ -6,11 +6,11 @@ const deleteDoctors = async (req, res) => {
     try {
         let result = await Doctors.findByPk(id);
 
-        if (!result) { return res.status(500).send(`Usuario não encontrado com id ${id}`); }
+        if (!result) { return res.status(500).send(`Doctor não encontrado com id ${id}`); }
 
         try {
             await Doctors.destroy({ where: { id } });
-        } catch (error) { res.status(400).send(`Não foi possível deletar o usuario: ${error}`) }
+        } catch (error) { res.status(400).send(`Não foi possível deletar o Doctor: ${error}`) }
 
         return res.status(200).send(`Item deletado com súcesso! id: ${id}`);
     } catch (error) { res.status(400).send(`Não foi possível fazer a operação: ${error}`) }

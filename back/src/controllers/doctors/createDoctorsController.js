@@ -15,23 +15,20 @@ const createDoctors = async (req, res, next) => {
 
         let result;
 
+        // Usuario que vai ser relacionado como medico se existe recebendo na variavel 
         let doctors_id = await Doctors.findByPk(data.user_id);
 
-        if (!doctors_id) {
-            return res.status(400).send(`usuario inserido não existe na base de dados! id: ${data.user_id}`)
-        }
+        // Validando se usuarios existe ou não
+        if (!doctors_id) { return res.status(400).send(`usuario inserido não existe na base de dados! id: ${data.user_id}`) }
 
         try {
-
             result = await Doctors.create(data);
-
         } catch (error) {
             const msg = "Não foi possível tentar gravar!";
             const erro = error?.message;
             return res.status(400).json({ msg, erro });
         }
 
-        // Resposta com sucesso
         return res.status(200).json({ msg: "GRAVADO COM SUCESSO", data: result.dataValues });
 
     } catch (error) {
