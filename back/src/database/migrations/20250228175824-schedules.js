@@ -11,16 +11,20 @@ module.exports = {
         allowNull: false,
         primaryKey: true
       },
-      user_id: {
+      doctor_id: {
         type: Sequelize.STRING(255),
         allowNull: false
       },
-      date_for_birth: {
-        type: Sequelize.DATE,
+      start_time: {
+        type: Sequelize.TIME,
         allowNull: false
       },
-      gender: {
-        type: Sequelize.STRING(250),
+      end_time: {
+        type: Sequelize.TIME,
+        allowNull: false
+      },
+      is_available: {
+        type: Sequelize.BOOLEAN,
         allowNull: false
       },
       createdAt: {
