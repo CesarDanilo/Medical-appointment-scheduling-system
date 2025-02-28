@@ -1,11 +1,11 @@
-const readDoctors = require("./readDoctorsController");
-const createDoctors = require("./createDoctorsController");
-const updateDoctors = require("./updateDoctorsController");
-const deleteDoctors = require("./deleteDoctorsController");
+const readSchedules = require("./readSchedulesController");
+const createSchedules = require("./createSchedulesController");
+const updateSchedules = require("./updateSchedulesController");
+const deleteSchedules = require("./deleteSchedulesController");
 
 module.exports = {
-    readDoctors,
-    createDoctors,
-    updateDoctors,
-    deleteDoctors
+    readSchedules,
+    createSchedules,
+    updateSchedules,
+    deleteSchedules
 }
