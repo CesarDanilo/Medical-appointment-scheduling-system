@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "node src/server.js"
-  },
+    "dev": "node src/server.js",
+    "create-migrate": "npx sequelize-cli migration:generate --name"
+  }, 
   "keywords": [],
   "author": "",
   "license": "ISC",
