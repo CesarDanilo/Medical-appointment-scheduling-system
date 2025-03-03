@@ -9,13 +9,13 @@ module.exports = (sequelize) => {
     }
     Patients.init({
         id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING(255),
             allowNull: false,
             autoIncrement: true,
             primaryKey: true
         },
         user_id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING(255),
             allowNull: false,
             references: {
                 model: 'users',
