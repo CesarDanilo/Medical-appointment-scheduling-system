@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid');  // Importa a função v4 para gerar UUIDs
-const { Doctor, Schedules } = require("../../database/models");
+const { Doctors, Schedules } = require("../../database/models");
 
 const createSchedules = async (req, res, next) => {
 
@@ -7,9 +7,9 @@ const createSchedules = async (req, res, next) => {
         const data = req.body;
 
         // Verificação de campos obrigatórios
-        if (!data.doctor_id || !data.start_time || !data.end_time || !data.is_available) {
+        if (!data.doctors_id || !data.start_time || !data.end_time || !data.is_available) {
             return res.status(400).json({
-                msg: "Não foi possível gravar! Todos os campos obrigatórios (user_id, specialty, bio) precisam ser preenchidos.",
+                msg: `Não foi possível gravar! Todos os campos obrigatórios  precisam ser preenchidos, ${data.doctorsId}, ${data.start_time}, ${data.end_time}, ${data.is_available}`,
                 data: req.body  // Enviando o conteúdo dos dados recebidos
             });
         }
@@ -17,16 +17,16 @@ const createSchedules = async (req, res, next) => {
         let result;
 
         // Usuário que vai ser relacionado como médico, se existe
-        let doctor_id = await Doctor.findByPk(data.user_id);
+        let doctors_id = await Doctors.findByPk(data.doctors_id);
 
         // Validando se o usuário existe ou não
-        if (!doctor_id) {
+        if (!doctors_id) {
             return res.status(400).send(`Usuário inserido não existe na base de dados! id: ${data.user_id}`);
         }
 
         // Gerar UUID para o id do médico
-        const doctorId = uuidv4();
-        data.id = doctorId;  // Atribui o UUID ao campo 'id'
+        const doctorsId = uuidv4();
+        data.id = doctorsId;  // Atribui o UUID ao campo 'id'
 
         try {
             result = await Schedules.create(data);  // Cria o médico com o id gerado
