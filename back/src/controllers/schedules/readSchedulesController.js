@@ -15,7 +15,7 @@ const schedulesControllers = async (req, res) => {
 
         const result = await Schedules.findAll({
             where,
-            attributes: ["id", "user_id", "specialty", "bio", "createdAt", "updatedAt"]
+            attributes: ["id", "doctor_id", "start_time", "end_time", "is_available", "createdAt", "updatedAt"]
         });
 
         return res.status(200).json({ data: result });
