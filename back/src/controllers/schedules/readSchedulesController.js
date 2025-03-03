@@ -3,7 +3,7 @@ const { Op } = require("sequelize");
 
 const schedulesControllers = async (req, res) => {
     try {
-        const { id, doctor_id } = req.query;
+        const { id, doc_id } = req.query;
         const where = {};
 
         // CRIANDO UM WHARE PARA TRAZER POR ID
@@ -13,9 +13,9 @@ const schedulesControllers = async (req, res) => {
             }
         }
 
-        if (doctor_id) {
+        if (doc_id) {
             where.doctor_id = {
-                [Op.eq]: doctor_id
+                [Op.eq]: doc_id
             }
         }
 
