@@ -16,7 +16,7 @@ module.exports = {
         allowNull: false
       },
       schedule_id: {
-        type: Sequelize.TIME,
+        type: Sequelize.STRING(255),
         allowNull: false
       },
       status: {
