@@ -11,20 +11,20 @@ module.exports = {
         allowNull: false,
         primaryKey: true
       },
-      doctor_id: {
+      patient_id: {
         type: Sequelize.STRING(255),
         allowNull: false
       },
-      start_time: {
+      schedule_id: {
         type: Sequelize.TIME,
         allowNull: false
       },
-      end_time: {
-        type: Sequelize.TIME,
+      status: {
+        type: Sequelize.STRING(100),
         allowNull: false
       },
-      is_available: {
-        type: Sequelize.BOOLEAN,
+      notes: {
+        type: Sequelize.TEXT,
         allowNull: false
       },
       createdAt: {
