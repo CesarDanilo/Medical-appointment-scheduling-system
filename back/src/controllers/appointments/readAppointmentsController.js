@@ -1,7 +1,7 @@
-const { Doctors } = require("../../database/models");
+const { Appointments } = require("../../database/models");
 const { Op } = require("sequelize");
 
-const doctorsControllers = async (req, res) => {
+const appointmentsControllers = async (req, res) => {
     try {
         const { id } = req.query;
         const where = {};
@@ -13,9 +13,9 @@ const doctorsControllers = async (req, res) => {
             }
         }
 
-        const result = await Doctors.findAll({
+        const result = await Appointments.findAll({
             where,
-            attributes: ["id", "user_id", "specialty", "bio", "createdAt", "updatedAt"]
+            attributes: ["id", "patient_id", "schedule_id", "status", "createdAt", "notes", "updatedAt"]
         });
 
         return res.status(200).json({ data: result });
@@ -24,4 +24,4 @@ const doctorsControllers = async (req, res) => {
     }
 };
 
-module.exports = doctorsControllers;
+module.exports = appointmentsControllers;
