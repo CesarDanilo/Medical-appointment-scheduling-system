@@ -1,13 +1,13 @@
-const { Doctors } = require("../../database/models");
+const { Appointments } = require("../../database/models");
 
-const updateDoctors = async (req, res, next) => {
+const updateAppointments = async (req, res, next) => {
     const { id } = req.params;
 
     try {
         const dados = req.body;
 
         // Tentar encontrar o usuário pelo id
-        let result = await Doctors.findByPk(id);
+        let result = await Appointments.findByPk(id);
 
         // Se o usuário não for encontrado, retornar erro
         if (!result) {
@@ -15,14 +15,14 @@ const updateDoctors = async (req, res, next) => {
         }
 
         try {
-            await Doctors.update(dados, { where: { id } });
+            await Appointments.update(dados, { where: { id } });
         } catch (error) {
             const msg = 'Erro ao tentar Gravar!';
             const erro = error?.message;
             return res.status(400).json({ msg, erro });
         }
 
-        result = await Doctors.findByPk(id);
+        result = await Appointments.findByPk(id);
 
         // Retornar sucesso com os dados atualizados
         return res.status(200).json({
@@ -35,4 +35,4 @@ const updateDoctors = async (req, res, next) => {
     }
 }
 
-module.exports = updateDoctors;
+module.exports = updateAppointments;
