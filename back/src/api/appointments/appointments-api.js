@@ -4,7 +4,7 @@ const routes = express.Router();
 const appointmentsControllers = require('../../controllers/appointments');
 
 routes.get('/', appointmentsControllers.readAppointments);
-routes.get('/:id', appointmentsControllers.readAppointmentsnts);
+routes.get('/:id', appointmentsControllers.readAppointments);
 
 routes.post('/create-appointments', appointmentsControllers.createAppointments);
 
