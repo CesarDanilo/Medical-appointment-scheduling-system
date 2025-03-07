@@ -16,7 +16,7 @@ const createAppointments = async (req, res, next) => {
 
         let result;
 
-        let patients = await Patients.findByPk(data.patients_id);
+        let patients = await Patients.findByPk(data.patient_id);
         let schedule = await Schedules.findByPk(data.schedule_id);
 
         if (!patients) {
