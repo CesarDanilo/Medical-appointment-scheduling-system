@@ -1,13 +1,13 @@
 const { v4: uuidv4 } = require('uuid');  // Importa a função v4 para gerar UUIDs
-const { Patients, Schedules, Appointments } = require("../../database/models");
+const { Payments, Appointments } = require("../../database/models");
 
-const createAppointments = async (req, res, next) => {
+const createPayments = async (req, res, next) => {
 
     try {
         const data = req.body;
 
         // Verificação de campos obrigatórios
-        if (!data.patient_id || !data.schedule_id || !data.status, !data.notes) {
+        if (!data.appointments_id || !data.amout || !data.payment_method, !data.status) {
             return res.status(400).json({
                 msg: "Não foi possível gravar! Todos os campos obrigatórios (user_id, specialty, bio) precisam ser preenchidos.",
                 data: req.body  // Enviando o conteúdo dos dados recebidos
@@ -16,22 +16,18 @@ const createAppointments = async (req, res, next) => {
 
         let result;
 
-        let patients = await Patients.findByPk(data.patient_id);
-        let schedule = await Schedules.findByPk(data.schedule_id);
+        let appointments = await Appointments.findByPk(data.appointments_id);
 
-        if (!patients) {
-            return res.status(400).send(`Patients inserido não existe na base de dados! id: ${data.patients_id}`);
-        }
-        if (!schedule) {
-            return res.status(400).send(`schedule inserido não existe na base de dados! id: ${data.schedule_id}`);
+        if (!appointments) {
+            return res.status(400).send(`Patients inserido não existe na base de dados! id: ${data.appointments_id}`);
         }
 
         // Gerar UUID para o id do médico
-        const appointmentsId = uuidv4();
-        data.id = appointmentsId;  // Atribui o UUID ao campo 'id'
+        const PaymentsId = uuidv4();
+        data.id = PaymentsId;  // Atribui o UUID ao campo 'id'
 
         try {
-            result = await Appointments.create(data);  // Cria o médico com o id gerado
+            result = await Payments.create(data);  // Cria o médico com o id gerado
         } catch (error) {
             const msg = "Não foi possível tentar gravar!";
             const erro = error?.message;
@@ -45,4 +41,4 @@ const createAppointments = async (req, res, next) => {
     }
 }
 
-module.exports = createAppointments;
+module.exports = createPayments;
