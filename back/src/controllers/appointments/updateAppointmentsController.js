@@ -1,4 +1,4 @@
-const { Appointments, Patients, Shedule } = require("../../database/models");
+const { Appointments, Patients, Schedules } = require("../../database/models");
 
 const updateAppointments = async (req, res, next) => {
     const { id } = req.params;
@@ -10,7 +10,7 @@ const updateAppointments = async (req, res, next) => {
         // Tentar encontrar o usuário pelo id
         let result = await Appointments.findByPk(id);
         let patientExists = await Patients.findByPk(dados.patient_id);
-        let sheduleExists = await Shedule.findByPk(dados.shedule_id);
+        let sheduleExists = await Schedules.findByPk(dados.schedule_id);
 
         // Se o usuário não for encontrado, retornar erro
         if (!result) {
