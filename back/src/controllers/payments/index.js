@@ -1,11 +1,11 @@
-const readAppointments = require("./readAppointmentsController");
-const createAppointments = require("./createAppointmentsController");
-const updateAppointments = require("./updateAppointmentsController");
-const deleteAppointments = require("./deleteAppointmentsController");
+const readPayments = require("./readPaymentsController");
+const createPayments = require("./createPaymentsController");
+const updatePayments = require("./updatePaymentsController");
+const deletePayments = require("./deletePaymentsController");
 
 module.exports = {
-    readAppointments,
-    createAppointments,
-    updateAppointments,
-    deleteAppointments
+    readPayments,
+    createPayments,
+    updatePayments,
+    deletePayments
 }
