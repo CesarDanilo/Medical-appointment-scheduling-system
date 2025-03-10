@@ -100,7 +100,7 @@ Agora você pode criar suas migrações. Por exemplo, para criar a tabela users,
 
 bash
 Copiar
-npx sequelize-cli migration:generate --name appointments
+npx sequelize-cli migration:generate --name payments
 Esse comando cria um arquivo de migração na pasta migrations/. O conteúdo do arquivo de migração será algo assim:
 
 js
