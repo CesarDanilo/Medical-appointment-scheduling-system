@@ -4,27 +4,23 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      'appointments', {
+      'reminders', {
 
       id: {
         type: Sequelize.STRING(255),
         allowNull: false,
         primaryKey: true
       },
-      patient_id: {
+      appointment_id: {
         type: Sequelize.STRING(255),
         allowNull: false
       },
-      schedule_id: {
-        type: Sequelize.STRING(255),
+      sent_at: {
+        type: Sequelize.TIME,
         allowNull: false
       },
-      status: {
+      reminder_type: {
         type: Sequelize.STRING(100),
-        allowNull: false
-      },
-      notes: {
-        type: Sequelize.TEXT,
         allowNull: false
       },
       createdAt: {
@@ -38,6 +34,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('appointments');
+    await queryInterface.dropTable('reminders');
   }
 };
