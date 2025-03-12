@@ -1,4 +1,4 @@
-const { Remainders } = require("../../database/models");
+const { Reminders } = require("../../database/models");
 const { Op } = require("sequelize");
 
 const remaindersControllers = async (req, res) => {
@@ -13,7 +13,7 @@ const remaindersControllers = async (req, res) => {
             }
         }
 
-        const result = await Remainders.findAll({
+        const result = await Reminders.findAll({
             where,
             attributes: ["id", "appointment_id", "sent_at", "reminder_type", "createdAt", "updatedAt"]
         });
