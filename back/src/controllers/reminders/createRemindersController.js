@@ -16,7 +16,7 @@ const createReminders = async (req, res, next) => {
 
         let result;
 
-        let appointments = await Appointments.findByPk(data.patient_id);
+        let appointments = await Appointments.findByPk(data.appointments_id);
 
         if (!appointments) {
             return res.status(400).send(`Patients inserido não existe na base de dados! id: ${data.appointments_id}`);
