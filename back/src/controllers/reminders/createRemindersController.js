@@ -19,7 +19,7 @@ const createReminders = async (req, res, next) => {
         let appointments = await Appointments.findByPk(data.appointments_id);
 
         if (!appointments) {
-            return res.status(400).send(`Patients inserido não existe na base de dados! id: ${data.appointments_id}`);
+            return res.status(400).send(`Appointments inserido não existe na base de dados! id: ${data.appointments_id}`);
         }
         // Gerar UUID para o id do médico
         const RemindersId = uuidv4();
