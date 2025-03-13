@@ -12,6 +12,6 @@ routes.use('/doctors', doctors_api);
 routes.use('/patients', patients_api);
 routes.use('/schedules', schedules_api);
 routes.use('/appointments', appointments_api);
-routes.use('/remainders', remainders_api);
+routes.use('/reminders', remainders_api);
 
 module.exports = routes;

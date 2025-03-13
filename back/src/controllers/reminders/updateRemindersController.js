@@ -1,4 +1,4 @@
-const { Reminders, Patients, Schedules } = require("../../database/models");
+const { Reminders, Appointments } = require("../../database/models");
 
 const updateReminders = async (req, res, next) => {
     const { id } = req.params;
