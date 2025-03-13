@@ -1,6 +1,6 @@
-const { Appointments, Patients, Schedules } = require("../../database/models");
+const { Reminders, Patients, Schedules } = require("../../database/models");
 
-const updateAppointments = async (req, res, next) => {
+const updateReminders = async (req, res, next) => {
     const { id } = req.params;
 
 
@@ -8,30 +8,26 @@ const updateAppointments = async (req, res, next) => {
         const dados = req.body;
 
         // Tentar encontrar o usuário pelo id
-        let result = await Appointments.findByPk(id);
-        let patientExists = await Patients.findByPk(dados.patient_id);
-        let sheduleExists = await Schedules.findByPk(dados.schedule_id);
+        let result = await Reminders.findByPk(id);
+        let appointments = await Appointments.findByPk(data.appointment_id);
 
         // Se o usuário não for encontrado, retornar erro
         if (!result) {
             return res.status(404).send(`Usuário não foi encontrado!`);
         }
-        if (!patientExists) {
-            return res.status(404).send(`Paciente não foi encontrado!`);
-        }
-        if (!sheduleExists) {
-            return res.status(404).send(`Shedule não foi encontrado!`);
+        if (!appointments) {
+            return res.status(404).send(`appointments não foi encontrado!`);
         }
 
         try {
-            await Appointments.update(dados, { where: { id } });
+            await Reminders.update(dados, { where: { id } });
         } catch (error) {
             const msg = 'Erro ao tentar Gravar!';
             const erro = error?.message;
             return res.status(400).json({ msg, erro });
         }
 
-        result = await Appointments.findByPk(id);
+        result = await Reminders.findByPk(id);
 
         // Retornar sucesso com os dados atualizados
         return res.status(200).json({
@@ -44,4 +40,4 @@ const updateAppointments = async (req, res, next) => {
     }
 }
 
-module.exports = updateAppointments;
+module.exports = updateReminders;
