@@ -7,16 +7,16 @@ const createReminders = async (req, res, next) => {
         const data = req.body;
 
         // Verificação de campos obrigatórios
-        if (!data.appointments_id || !data.sent_at || !data.reminder_type) {
+        if (!data.appointment_id || !data.sent_at || !data.reminder_type) {
             return res.status(400).json({
-                msg: "Não foi possível gravar! Todos os campos obrigatórios (user_id, specialty, bio) precisam ser preenchidos.",
+                msg: "Não foi possível gravar! Todos os campos obrigatórios precisam ser preenchidos.",
                 data: req.body  // Enviando o conteúdo dos dados recebidos
             });
         }
 
         let result;
 
-        let appointments = await Appointments.findByPk(data.appointments_id);
+        let appointments = await Appointments.findByPk(data.appointment_id);
 
         if (!appointments) {
             return res.status(400).send(`Appointments inserido não existe na base de dados! id: ${data.appointments_id}`);
