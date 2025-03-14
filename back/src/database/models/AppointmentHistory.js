@@ -22,12 +22,12 @@ module.exports = (sequelize) => {
                 key: 'id'
             }
         },
-        sent_at: {
-            type: DataTypes.TIME,
+        diagnosis: {
+            type: DataTypes.TEXT,
             allowNull: false
         },
-        reminder_type: {
-            type: DataTypes.STRING(100),
+        prescription: {
+            type: DataTypes.TEXT,
             allowNull: false
         },
         createdAt: {
