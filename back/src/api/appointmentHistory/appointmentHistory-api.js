@@ -5,7 +5,6 @@ const appointmentHistoryControllers = require('../../controllers/appointmentHist
 
 routes.get('/', appointmentHistoryControllers.readAppointmentHistory);
 routes.get('/:id', appointmentHistoryControllers.readAppointmentHistory);
-routes.get('/doc_id/:doctor_id', appointmentHistoryControllers.readAppointmentHistory);
 
 routes.post('/create-AppointmentHistory', appointmentHistoryControllers.createAppointmentHistory);
 
