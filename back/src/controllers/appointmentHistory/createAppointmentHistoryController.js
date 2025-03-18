@@ -1,27 +1,24 @@
 const { v4: uuidv4 } = require('uuid');
-const { Appointment, AppointmentHistory } = require("../../database/models");
+const { Appointments, AppointmentHistory } = require("../../database/models");
 
 const createAppointmentHistory = async (req, res, next) => {
     try {
         const data = req.body;
 
         // Verificação de campos obrigatórios
-        const requiredFields = ['appointment_id', 'diagnosis', 'prescription'];
-        const missingFields = requiredFields.filter(field => !data[field]);
-
-        if (missingFields.length > 0) {
+        if (!data.appointment_id || !data.diagnosis || !data.prescription) {
             return res.status(400).json({
-                msg: `Não foi possível gravar! Os seguintes campos obrigatórios precisam ser preenchidos: ${missingFields.join(', ')}`,
+                msg: "Não foi possível gravar! Todos os campos obrigatórios.",
                 data: req.body
             });
         }
 
         // Verifica se o appointment_id existe na base de dados
-        const appointment = await Appointment.findByPk(data.appointment_id);
+        const appointment = await Appointments.findByPk(data.appointment_id);
 
         if (!appointment) {
             return res.status(400).json({
-                msg: `O agendamento inserido não existe na base de dados! id: ${data.appointment_id}`
+                msg: `Appointment inserido não existe na base de dados! id: ${data.appointment_id}`
             });
         }
 
@@ -41,7 +38,7 @@ const createAppointmentHistory = async (req, res, next) => {
         }
 
         return res.status(200).json({
-            msg: "Histórico de agendamento gravado com sucesso!",
+            msg: "GRAVADO COM SUCESSO",
             data: result.dataValues
         });
 
