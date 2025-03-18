@@ -2,7 +2,8 @@ const { v4: uuidv4 } = require('uuid');
 const { Appointments, AppointmentHistory } = require("../../database/models");
 
 const createAppointmentHistory = async (req, res, next) => {
-    try {
+    try { 
+        
         const data = req.body;
 
         // Verificação de campos obrigatórios
