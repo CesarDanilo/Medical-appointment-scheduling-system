@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid');  // Importa a função v4 para gerar UUIDs
+const { v4: uuidv4 } = require('uuid');
 const { Appointment, AppointmentHistory } = require("../../database/models");
 
 const createAppointmentHistory = async (req, res, next) => {
@@ -12,7 +12,7 @@ const createAppointmentHistory = async (req, res, next) => {
         if (missingFields.length > 0) {
             return res.status(400).json({
                 msg: `Não foi possível gravar! Os seguintes campos obrigatórios precisam ser preenchidos: ${missingFields.join(', ')}`,
-                data: req.body  // Enviando o conteúdo dos dados recebidos
+                data: req.body
             });
         }
 
@@ -27,7 +27,7 @@ const createAppointmentHistory = async (req, res, next) => {
 
         // Gerar UUID para o id do histórico de agendamento
         const appointmentHistoryId = uuidv4();
-        data.id = appointmentHistoryId;  // Atribui o UUID ao campo 'id'
+        data.id = appointmentHistoryId;
 
         // Tenta criar o histórico de agendamento
         let result;
