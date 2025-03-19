@@ -45,7 +45,7 @@ function Tables() {
           <Card>
             <VuiBox display="flex" justifyContent="space-between" alignItems="center" mb="22px">
               <VuiTypography variant="lg" color="white">
-                Authors table
+                Usuários
               </VuiTypography>
             </VuiBox>
             <VuiBox
@@ -66,7 +66,7 @@ function Tables() {
             </VuiBox>
           </Card>
         </VuiBox>
-        <Card>
+        {/* <Card>
           <VuiBox display="flex" justifyContent="space-between" alignItems="center">
             <VuiTypography variant="lg" color="white">
               Projects table
@@ -88,7 +88,7 @@ function Tables() {
           >
             <Table columns={prCols} rows={prRows} />
           </VuiBox>
-        </Card>
+        </Card> */}
       </VuiBox>
       <Footer />
     </DashboardLayout>

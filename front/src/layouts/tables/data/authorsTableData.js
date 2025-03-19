@@ -64,45 +64,41 @@ function Function({ job, org }) {
 
 export default {
   columns: [
-    { name: "author", align: "left" },
-    { name: "function", align: "left" },
-    { name: "status", align: "center" },
-    { name: "employed", align: "center" },
-    { name: "action", align: "center" },
+    { name: "name", align: "left" },
+    { name: "email", align: "left" },
+    { name: "password", align: "center" },
+    { name: "role", align: "center" },
+    { name: "data_de_criação", align: "center" },
   ],
 
   rows: [
     {
-      author: <Author image={avatar4} name="Esthera Jackson" email="esthera@simmmple.com" />,
+      name: <Author image={avatar4} name="Esthera Jackson" email="esthera@simmmple.com" />,
       function: <Function job="Manager" org="Organization" />,
-      status: (
-        <VuiBadge
-          variant="standard"
-          badgeContent="Online"
-          color="success"
-          size="xs"
-          container
-          sx={({ palette: { white, success }, borders: { borderRadius, borderWidth } }) => ({
-            background: success.main,
-            border: `${borderWidth[1]} solid ${success.main}`,
-            borderRadius: borderRadius.md,
-            color: white.main,
-          })}
-        />
+      email: (
+        <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          email@gmail.com
+        </VuiTypography>
       ),
-      employed: (
+      password: (
+        <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          *******
+        </VuiTypography>
+      ),
+      role: (
+        <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          médico
+        </VuiTypography>
+      ),
+      data_de_criação: (
         <VuiTypography variant="caption" color="white" fontWeight="medium">
           23/04/18
         </VuiTypography>
       ),
-      action: (
-        <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          Edit
-        </VuiTypography>
-      ),
+
     },
     {
-      author: <Author image={avatar2} name="Alexa Liras" email="alexa@simmmple.com" />,
+      author: <Author image={avatar2} name="Alexa Liras"/>,
       function: <Function job="Programator" org="Developer" />,
       status: (
         <VuiBadge
