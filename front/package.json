@@ -23,6 +23,7 @@
 		"@mui/styles": "^5.2.0",
 		"ajv": "^8.17.1",
 		"apexcharts": "^3.30.0",
+		"axios": "^1.8.4",
 		"chroma-js": "2.1.2",
 		"install": "^0.13.0",
 		"prop-types": "15.7.2",

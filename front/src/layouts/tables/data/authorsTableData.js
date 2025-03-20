@@ -11,16 +11,21 @@ import avatar4 from "assets/images/avatar4.png";
 import avatar5 from "assets/images/avatar5.png";
 import avatar6 from "assets/images/avatar6.png";
 
+import axios from "axios";
 
-function getUserData() {
-  baseUrl = "";
+const getUserData = async () => {
+  const baseUrl = "http://localhost:3001/user/";
   try {
+    const res = await axios.get(baseUrl);
+    const { data } = res.data;
+    console.log("responsta do servidor: ", data);
 
   } catch (error) {
     console.log(`Erro na busca dos dados dos usuarios: ${error}`)
   }
-
 }
+
+getUserData();
 
 function Author({ image, name, email }) {
   return (
