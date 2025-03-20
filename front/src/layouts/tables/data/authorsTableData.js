@@ -1,23 +1,3 @@
-/*!
-
-=========================================================
-* Vision UI Free React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/vision-ui-free-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-* Licensed under MIT (https://github.com/creativetimofficial/vision-ui-free-react/blob/master LICENSE.md)
-
-* Design and Coded by Simmmple & Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-/* eslint-disable react/prop-types */
-// Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiAvatar from "components/VuiAvatar";
@@ -30,6 +10,17 @@ import avatar3 from "assets/images/avatar3.png";
 import avatar4 from "assets/images/avatar4.png";
 import avatar5 from "assets/images/avatar5.png";
 import avatar6 from "assets/images/avatar6.png";
+
+
+function getUserData() {
+  baseUrl = "";
+  try {
+
+  } catch (error) {
+    console.log(`Erro na busca dos dados dos usuarios: ${error}`)
+  }
+
+}
 
 function Author({ image, name, email }) {
   return (
@@ -98,7 +89,7 @@ export default {
 
     },
     {
-      author: <Author image={avatar2} name="Alexa Liras"/>,
+      author: <Author image={avatar2} name="Alexa Liras" />,
       function: <Function job="Programator" org="Developer" />,
       status: (
         <VuiBadge
