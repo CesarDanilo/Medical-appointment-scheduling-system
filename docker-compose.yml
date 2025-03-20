@@ -14,7 +14,7 @@ services:
   backend:
     build: ./back  # Constrói a imagem do backend a partir do Dockerfile na pasta ./back
     ports:
-      - "3000:3000"  # Expõe a porta 3000 do contêiner para o host
+      - "3001:3001"  # Expõe a porta 3000 do contêiner para o host
     depends_on:
       - db  # Garante que o contêiner do banco de dados seja iniciado antes do backend
     environment:
