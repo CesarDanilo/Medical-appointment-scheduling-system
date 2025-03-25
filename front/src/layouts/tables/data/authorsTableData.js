@@ -12,21 +12,9 @@ import avatar5 from "assets/images/avatar5.png";
 import avatar6 from "assets/images/avatar6.png";
 
 import axios from "axios";
+import React, { useState, useEffect } from "react";
 
-const getUserData = async () => {
-  const baseUrl = "http://localhost:3001/user/";
-  try {
-    const res = await axios.get(baseUrl);
-    const { data } = res.data;
-    console.log("responsta do servidor: ", data);
-
-  } catch (error) {
-    console.log(`Erro na busca dos dados dos usuarios: ${error}`)
-  }
-}
-
-getUserData();
-
+// Componente para renderizar o autor
 function Author({ image, name, email }) {
   return (
     <VuiBox display="flex" alignItems="center" px={1} py={0.5}>
@@ -45,6 +33,7 @@ function Author({ image, name, email }) {
   );
 }
 
+// Componente para renderizar a função
 function Function({ job, org }) {
   return (
     <VuiBox display="flex" flexDirection="column">
@@ -58,182 +47,72 @@ function Function({ job, org }) {
   );
 }
 
-export default {
-  columns: [
-    { name: "name", align: "left" },
-    { name: "email", align: "left" },
-    { name: "password", align: "center" },
-    { name: "role", align: "center" },
-    { name: "data_de_criação", align: "center" },
-  ],
+// Componente principal da tabela
+const AuthorsTableData = () => {
+  const [rows, setRows] = useState([]);
 
-  rows: [
-    {
-      name: <Author image={avatar4} name="Esthera Jackson" email="esthera@simmmple.com" />,
-      function: <Function job="Manager" org="Organization" />,
-      email: (
-        <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          email@gmail.com
-        </VuiTypography>
-      ),
-      password: (
-        <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          *******
-        </VuiTypography>
-      ),
-      role: (
-        <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          médico
-        </VuiTypography>
-      ),
-      data_de_criação: (
-        <VuiTypography variant="caption" color="white" fontWeight="medium">
-          23/04/18
-        </VuiTypography>
-      ),
+  // Função para buscar dados da API
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/user/");
+      const users = response.data.data; // Acessa o array de usuários dentro de "data"
 
-    },
-    {
-      author: <Author image={avatar2} name="Alexa Liras" />,
-      function: <Function job="Programator" org="Developer" />,
-      status: (
-        <VuiBadge
-          variant="standard"
-          badgeContent="Offline"
-          size="xs"
-          container
-          sx={({ palette: { white }, borders: { borderRadius, borderWidth } }) => ({
-            background: "unset",
-            border: `${borderWidth[1]} solid ${white.main}`,
-            borderRadius: borderRadius.md,
-            color: white.main,
-          })}
-        />
-      ),
-      employed: (
-        <VuiTypography variant="caption" color="white" fontWeight="medium">
-          11/01/19
-        </VuiTypography>
-      ),
-      action: (
-        <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          Edit
-        </VuiTypography>
-      ),
-    },
-    {
-      author: <Author image={avatar3} name="Laurent Michael" email="laurent@simmmple.com" />,
-      function: <Function job="Executive" org="Projects" />,
-      status: (
-        <VuiBadge
-          variant="standard"
-          badgeContent="Online"
-          color="success"
-          size="xs"
-          container
-          sx={({ palette: { white, success }, borders: { borderRadius, borderWidth } }) => ({
-            background: success.main,
-            border: `${borderWidth[1]} solid ${success.main}`,
-            borderRadius: borderRadius.md,
-            color: white.main,
-          })}
-        />
-      ),
-      employed: (
-        <VuiTypography variant="caption" color="white" fontWeight="medium">
-          19/09/17
-        </VuiTypography>
-      ),
-      action: (
-        <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          Edit
-        </VuiTypography>
-      ),
-    },
-    {
-      author: <Author image={avatar1} name="Freduardo Hill" email="freduardo@simmmple.com" />,
-      function: <Function job="Programator" org="Developer" />,
-      status: (
-        <VuiBadge
-          variant="standard"
-          badgeContent="Online"
-          color="success"
-          size="xs"
-          container
-          sx={({ palette: { white, success }, borders: { borderRadius, borderWidth } }) => ({
-            background: success.main,
-            border: `${borderWidth[1]} solid ${success.main}`,
-            borderRadius: borderRadius.md,
-            color: white.main,
-          })}
-        />
-      ),
-      employed: (
-        <VuiTypography variant="caption" color="white" fontWeight="medium">
-          24/12/08
-        </VuiTypography>
-      ),
-      action: (
-        <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          Edit
-        </VuiTypography>
-      ),
-    },
-    {
-      author: <Author image={avatar5} name="Daniel Thomas" email="daniel@simmmple.com" />,
-      function: <Function job="Manager" org="Executive" />,
-      status: (
-        <VuiBadge
-          variant="standard"
-          badgeContent="Offline"
-          size="xs"
-          container
-          sx={({ palette: { white }, borders: { borderRadius, borderWidth } }) => ({
-            background: "unset",
-            border: `${borderWidth[1]} solid ${white.main}`,
-            borderRadius: borderRadius.md,
-            color: white.main,
-          })}
-        />
-      ),
-      employed: (
-        <VuiTypography variant="caption" color="white" fontWeight="medium">
-          04/10/21
-        </VuiTypography>
-      ),
-      action: (
-        <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          Edit
-        </VuiTypography>
-      ),
-    },
-    {
-      author: <Author image={avatar6} name="Mark Wilson" email="mark@simmmple.com" />,
-      function: <Function job="Programtor" org="Developer" />,
-      status: (
-        <VuiBadge
-          variant="standard"
-          badgeContent="Offline"
-          size="xs"
-          container
-          sx={({ palette: { white }, borders: { borderRadius, borderWidth } }) => ({
-            background: "unset",
-            border: `${borderWidth[1]} solid ${white.main}`,
-            borderRadius: borderRadius.md,
-            color: white.main,
-          })}
-        />
-      ),
-      employed: (
-        <VuiTypography variant="caption" color="white" fontWeight="medium">
-          14/09/20
-        </VuiTypography>
-      ),
-      action: (
-        <VuiTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          Edit
-        </VuiTypography>
-      ),
-    },
-  ],
+      console.log("Dados recebidos da API:", users);
+
+      // Mapeia os dados da API para o formato esperado pela tabela
+      const formattedRows = users.map((user, index) => {
+        // Seleciona um avatar com base no índice (ou use uma lógica personalizada)
+        const avatars = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6];
+        const avatar = avatars[index % avatars.length]; // Usa avatars em ciclo
+
+        return {
+          name: <Author image={avatar} name={user.name} email={user.email} />,
+          email: (
+            <VuiTypography variant="caption" color="text" fontWeight="medium">
+              {user.email}
+            </VuiTypography>
+          ),
+          password: (
+            <VuiTypography variant="caption" color="text" fontWeight="medium">
+              *******
+            </VuiTypography>
+          ),
+          role: (
+            <VuiTypography variant="caption" color="text" fontWeight="medium">
+              {user.role}
+            </VuiTypography>
+          ),
+          data_de_criação: (
+            <VuiTypography variant="caption" color="white" fontWeight="medium">
+              {new Date(user.createdAt).toLocaleDateString()}
+            </VuiTypography>
+          ),
+        };
+      });
+
+      console.log("Linhas formatadas:", formattedRows);
+      return formattedRows; // Retorna as linhas formatadas
+    } catch (error) {
+      console.error("Erro ao buscar dados dos usuários:", error);
+      return []; // Retorna um array vazio em caso de erro
+    }
+  };
+
+  // Busca os dados ao montar o componente
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  return {
+    columns: [
+      { name: "name", align: "left" },
+      { name: "email", align: "left" },
+      { name: "password", align: "center" },
+      { name: "role", align: "center" },
+      { name: "data_de_criação", align: "center" },
+    ],
+    rows,
+  };
 };
+
+export default AuthorsTableData;
