@@ -1,41 +1,25 @@
-/*!
-
-=========================================================
-* Vision UI Free React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/vision-ui-free-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-* Licensed under MIT (https://github.com/creativetimofficial/vision-ui-free-react/blob/master LICENSE.md)
-
-* Design and Coded by Simmmple & Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// @mui material components
+import { useState } from "react";
 import Card from "@mui/material/Card";
+import CircularProgress from "@mui/material/CircularProgress";
 
-// Vision UI Dashboard React components
+// Vision UI Components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
-
-// Vision UI Dashboard React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Table from "examples/Tables/Table";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import useAuthorsTableData from "layouts/tables/data/authorsTableData";
 
 function Tables() {
-  const { columns, rows } = authorsTableData;
-  const { columns: prCols, rows: prRows } = projectsTableData;
+  const { columns, rows, loading, error } = useAuthorsTableData();
+  const [refresh, setRefresh] = useState(false);
+
+  const handleRefresh = () => {
+    setRefresh(prev => !prev);
+  };
 
   return (
     <DashboardLayout>
@@ -47,7 +31,25 @@ function Tables() {
               <VuiTypography variant="lg" color="white">
                 Usuários
               </VuiTypography>
+              <VuiTypography
+                variant="button"
+                color="info"
+                fontWeight="medium"
+                onClick={handleRefresh}
+                style={{ cursor: 'pointer' }}
+              >
+                Atualizar
+              </VuiTypography>
             </VuiBox>
+
+            {error && (
+              <VuiBox p={2} textAlign="center">
+                <VuiTypography variant="caption" color="error">
+                  Erro ao carregar dados: {error}
+                </VuiTypography>
+              </VuiBox>
+            )}
+
             <VuiBox
               sx={{
                 "& th": {
@@ -60,35 +62,20 @@ function Tables() {
                       `${borderWidth[1]} solid ${grey[700]}`,
                   },
                 },
+                minHeight: loading ? "200px" : "auto",
+                display: "flex",
+                justifyContent: loading ? "center" : "flex-start",
+                alignItems: loading ? "center" : "flex-start",
               }}
             >
-              <Table columns={columns} rows={rows} />
+              {loading ? (
+                <CircularProgress color="info" />
+              ) : (
+                <Table columns={columns} rows={rows} />
+              )}
             </VuiBox>
           </Card>
         </VuiBox>
-        {/* <Card>
-          <VuiBox display="flex" justifyContent="space-between" alignItems="center">
-            <VuiTypography variant="lg" color="white">
-              Projects table
-            </VuiTypography>
-          </VuiBox>
-          <VuiBox
-            sx={{
-              "& th": {
-                borderBottom: ({ borders: { borderWidth }, palette: { grey } }) =>
-                  `${borderWidth[1]} solid ${grey[700]}`,
-              },
-              "& .MuiTableRow-root:not(:last-child)": {
-                "& td": {
-                  borderBottom: ({ borders: { borderWidth }, palette: { grey } }) =>
-                    `${borderWidth[1]} solid ${grey[700]}`,
-                },
-              },
-            }}
-          >
-            <Table columns={prCols} rows={prRows} />
-          </VuiBox>
-        </Card> */}
       </VuiBox>
       <Footer />
     </DashboardLayout>
