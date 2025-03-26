@@ -14,11 +14,11 @@ import Table from "examples/Tables/Table";
 import useAuthorsTableData from "layouts/tables/data/authorsTableData";
 
 function Tables() {
-  const { columns, rows, loading, error } = useAuthorsTableData();
-  const [refresh, setRefresh] = useState(false);
+  const [refreshCount, setRefreshCount] = useState(0);
+  const { columns, rows, loading, error } = useAuthorsTableData(refreshCount);
 
   const handleRefresh = () => {
-    setRefresh(prev => !prev);
+    setRefreshCount(prev => prev + 1);
   };
 
   return (
@@ -38,14 +38,14 @@ function Tables() {
                 onClick={handleRefresh}
                 style={{ cursor: 'pointer' }}
               >
-                Atualizar
+                {loading ? 'Atualizando...' : 'Atualizar'}
               </VuiTypography>
             </VuiBox>
 
             {error && (
               <VuiBox p={2} textAlign="center">
                 <VuiTypography variant="caption" color="error">
-                  Erro ao carregar dados: {error}
+                  {error}
                 </VuiTypography>
               </VuiBox>
             )}

@@ -1,8 +1,10 @@
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiAvatar from "components/VuiAvatar";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
-// Images
+// Images (seus imports de avatar...)
 import avatar1 from "assets/images/avatar1.png";
 import avatar2 from "assets/images/avatar2.png";
 import avatar3 from "assets/images/avatar3.png";
@@ -10,30 +12,11 @@ import avatar4 from "assets/images/avatar4.png";
 import avatar5 from "assets/images/avatar5.png";
 import avatar6 from "assets/images/avatar6.png";
 
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-
-// Componente para renderizar o autor
 function Author({ image, name, email }) {
-  return (
-    <VuiBox display="flex" alignItems="center" px={1} py={0.5}>
-      <VuiBox mr={2}>
-        <VuiAvatar src={image} alt={name} size="sm" variant="rounded" />
-      </VuiBox>
-      <VuiBox display="flex" flexDirection="column">
-        <VuiTypography variant="button" color="white" fontWeight="medium">
-          {name}
-        </VuiTypography>
-        <VuiTypography variant="caption" color="text">
-          {email}
-        </VuiTypography>
-      </VuiBox>
-    </VuiBox>
-  );
+  // (seu componente Author existente...)
 }
 
-// Componente principal da tabela
-const AuthorsTableData = () => {
+const useAuthorsTableData = (refreshFlag) => {
   const [tableData, setTableData] = useState({
     columns: [
       { name: "name", align: "left" },
@@ -41,58 +24,65 @@ const AuthorsTableData = () => {
       { name: "role", align: "center" },
       { name: "data_de_criação", align: "center" },
     ],
-    rows: []
+    rows: [],
+    loading: true,
+    error: null
   });
 
-  // Função para buscar dados da API
   const fetchUserData = async () => {
     try {
+      setTableData(prev => ({ ...prev, loading: true, error: null }));
+      
       const response = await axios.get("http://localhost:3001/user/");
-      const users = response.data.data; // Acessa o array de usuários dentro de "data"
+      
+      if (!response.data || !response.data.data) {
+        throw new Error("Dados da API não estão no formato esperado");
+      }
 
-      // Mapeia os dados da API para o formato esperado pela tabela
-      const formattedRows = users.map((user, index) => {
-        // Seleciona um avatar com base no índice
-        const avatars = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6];
-        const avatar = avatars[index % avatars.length];
+      const users = response.data.data;
+      const avatars = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6];
 
-        return {
-          name: <Author image={avatar} name={user.name} email={user.email} />,
-          email: (
-            <VuiTypography variant="caption" color="text" fontWeight="medium">
-              {user.email}
-            </VuiTypography>
-          ),
-          role: (
-            <VuiTypography variant="caption" color="text" fontWeight="medium">
-              {user.role}
-            </VuiTypography>
-          ),
-          data_de_criação: (
-            <VuiTypography variant="caption" color="white" fontWeight="medium">
-              {new Date(user.createdAt).toLocaleDateString()}
-            </VuiTypography>
-          ),
-        };
-      });
-
-      setTableData(prev => ({
-        ...prev,
-        rows: formattedRows
+      const formattedRows = users.map((user, index) => ({
+        name: <Author image={avatars[index % avatars.length]} name={user.name} email={user.email} />,
+        email: (
+          <VuiTypography variant="caption" color="text" fontWeight="medium">
+            {user.email}
+          </VuiTypography>
+        ),
+        role: (
+          <VuiTypography variant="caption" color="text" fontWeight="medium">
+            {user.role}
+          </VuiTypography>
+        ),
+        data_de_criação: (
+          <VuiTypography variant="caption" color="white" fontWeight="medium">
+            {new Date(user.createdAt).toLocaleDateString()}
+          </VuiTypography>
+        ),
       }));
 
+      setTableData({
+        columns: tableData.columns,
+        rows: formattedRows,
+        loading: false,
+        error: null
+      });
+
     } catch (error) {
-      console.error("Erro ao buscar dados dos usuários:", error);
-      // Você pode querer mostrar uma mensagem de erro para o usuário aqui
+      setTableData({
+        columns: tableData.columns,
+        rows: [],
+        loading: false,
+        error: error.message || "Erro ao carregar usuários"
+      });
     }
   };
 
-  // Busca os dados ao montar o componente
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, [refreshFlag]);
 
   return tableData;
 };
 
-export default AuthorsTableData;
+export default useAuthorsTableData;
