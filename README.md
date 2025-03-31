@@ -103,4 +103,3 @@ O sistema permite que pacientes agendem consultas médicas online, enquanto os m
 ### Integração com Pagamentos
 - Implementar um sistema de pagamento seguro e confiável, com suporte a diferentes métodos de pagamento.
 
-## Ideias de Melhoria e Expansão
