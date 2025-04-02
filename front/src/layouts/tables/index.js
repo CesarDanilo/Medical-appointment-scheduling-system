@@ -27,19 +27,34 @@ function Tables() {
       <VuiBox py={3}>
         <VuiBox mb={3}>
           <Card>
-            <VuiBox display="flex" justifyContent="space-between" alignItems="center" mb="22px">
+            <VuiBox 
+              display="flex" 
+              justifyContent="space-between" 
+              alignItems="center"
+              p={3}
+            >
               <VuiTypography variant="lg" color="white">
                 Usuários
               </VuiTypography>
-              <VuiTypography
-                variant="button"
-                color="info"
-                fontWeight="medium"
-                onClick={handleRefresh}
-                style={{ cursor: 'pointer' }}
-              >
-                {loading ? 'Atualizando...' : 'Atualizar'}
-              </VuiTypography>
+              <VuiBox display="flex" alignItems="center">
+                <VuiTypography
+                  variant="button"
+                  color="info"
+                  fontWeight="medium"
+                  onClick={handleRefresh}
+                  sx={{
+                    cursor: 'pointer',
+                    px: 2,
+                    py: 1,
+                    borderRadius: '5px',
+                    '&:hover': {
+                      backgroundColor: 'rgba(0, 0, 0, 0.1)'
+                    }
+                  }}
+                >
+                  {loading ? 'Atualizando...' : 'Atualizar'}
+                </VuiTypography>
+              </VuiBox>
             </VuiBox>
 
             {error && (
@@ -66,18 +81,29 @@ function Tables() {
                 display: "flex",
                 justifyContent: loading ? "center" : "flex-start",
                 alignItems: loading ? "center" : "flex-start",
+                p: 3
               }}
             >
               {loading ? (
                 <CircularProgress color="info" />
               ) : (
-                <Table columns={columns} rows={rows} />
+                <Table 
+                  columns={columns} 
+                  rows={rows} 
+                  sx={{
+                    width: '100%',
+                    '& .MuiTableCell-root': {
+                      py: 1.5,
+                      fontSize: '0.875rem'
+                    }
+                  }}
+                />
               )}
             </VuiBox>
           </Card>
         </VuiBox>
       </VuiBox>
-      <Footer />
+      {/* <Footer /> */}
     </DashboardLayout>
   );
 }
