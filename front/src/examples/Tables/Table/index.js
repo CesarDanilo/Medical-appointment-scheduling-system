@@ -29,16 +29,19 @@ import { Table as MuiTable } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
+import Icon from "@mui/material/Icon";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiAvatar from "components/VuiAvatar";
 import VuiTypography from "components/VuiTypography";
+import VuiButton from "components/VuiButton";
 
 // Vision UI Dashboard React base styles
 import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 import borders from "assets/theme/base/borders";
+
 
 function Table({ columns, rows }) {
   const { grey } = colors;
@@ -72,7 +75,7 @@ function Table({ columns, rows }) {
         textAlign={align}
         fontSize={size.xxs}
         fontWeight={fontWeightBold}
-        color="text"
+        color="white"
         opacity={0.7}
         borderBottom={`${borderWidth[1]} solid ${grey[700]}`}
       >
@@ -96,11 +99,8 @@ function Table({ columns, rows }) {
             borderBottom={row.hasBorder ? `${borderWidth[1]} solid ${light.main}` : null}
           >
             <VuiBox display="flex" alignItems="center" py={0.5} px={1}>
-              <VuiBox mr={2}>
-                <VuiAvatar src={row[name][0]} name={row[name][1]} variant="rounded" size="sm" />
-              </VuiBox>
               <VuiTypography
-                color="white"
+                color="light"
                 variant="button"
                 fontWeight="medium"
                 sx={{ width: "max-content" }}
@@ -117,24 +117,42 @@ function Table({ columns, rows }) {
             component="td"
             p={1}
             textAlign={align}
-            borderBottom={row.hasBorder ? `${borderWidth[1]} solid ${grey[700]}` : null}
+            borderBottom={row.hasBorder ? `${borderWidth[1]} solid ${grey[400]}` : null}
           >
             <VuiTypography
               variant="button"
               fontWeight="regular"
-              color="text"
+              color="white"
               sx={{ display: "inline-block", width: "max-content" }}
             >
               {row[name]}
             </VuiTypography>
           </VuiBox>
+
         );
       }
 
       return template;
     });
 
-    return <TableRow key={rowKey}>{tableRow}</TableRow>;
+    return (
+      <TableRow key={rowKey}>{tableRow}
+        <VuiBox display="flex" alignItems="center" py={1} px={1}>
+          <VuiButton
+            color="info"
+            size="medium"
+            variant="outlined"
+            circular="true"
+            sx={{ marginRight: '5px' }}  // Adiciona margem à direita
+          >
+            <Icon>edit</Icon>
+          </VuiButton>
+          <VuiButton color="error" size="medium" variant="gradient" circular="true">
+            <Icon>delete</Icon>
+          </VuiButton>
+        </VuiBox>
+      </TableRow>
+    );
   });
 
   return useMemo(
