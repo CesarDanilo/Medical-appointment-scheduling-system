@@ -9,9 +9,11 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Table from "examples/Tables/Table";
+import FormUsers from "examples/Forms/FormUsers";
 
 // Data
 import useAuthorsTableData from "layouts/tables/data/authorsTableData";
+import { Directions } from "@mui/icons-material";
 
 function Tables() {
   const [refreshCount, setRefreshCount] = useState(0);
@@ -27,9 +29,9 @@ function Tables() {
       <VuiBox py={3}>
         <VuiBox mb={3}>
           <Card>
-            <VuiBox 
-              display="flex" 
-              justifyContent="space-between" 
+            <VuiBox
+              display="flex"
+              justifyContent="space-between"
               alignItems="center"
               p={3}
             >
@@ -79,17 +81,22 @@ function Tables() {
                 },
                 minHeight: loading ? "200px" : "auto",
                 display: "flex",
+                flexDirection: "column",
                 justifyContent: loading ? "center" : "flex-start",
                 alignItems: loading ? "center" : "flex-start",
-                p: 3
+                p: 3,
+                gap: 3 // Add some spacing between components
               }}
             >
+              {/* componente que vai ficar responsavel pelo cadastro de usuario */}
+              <FormUsers />
+
               {loading ? (
                 <CircularProgress color="info" />
               ) : (
-                <Table 
-                  columns={columns} 
-                  rows={rows} 
+                <Table
+                  columns={columns}
+                  rows={rows}
                   sx={{
                     width: '100%',
                     '& .MuiTableCell-root': {
