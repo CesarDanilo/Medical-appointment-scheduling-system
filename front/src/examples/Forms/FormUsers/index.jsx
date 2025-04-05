@@ -1,10 +1,16 @@
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiInput from "components/VuiInput";
+import { Select, MenuItem } from "@mui/material";
+import { Type } from "ajv/dist/compile/util";
+import { Password } from "@mui/icons-material";
+import { useState } from "react";
 
 const FormUsers = () => {
+    const [role, setRole] = useState("paciente"); // Estado inicial
+
     return (
-        <VuiBox sx={{ width: "100%", maxWidth: "800px", mx: "auto", display: "flex", flexDirection: "row"}}>
+        <VuiBox sx={{ width: "100%", maxWidth: "800px", mx: "auto", display: "flex", flexDirection: "row" }}>
             <VuiBox sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2 }}>
                 <VuiBox>
                     <VuiTypography variant="body2" color="info" textGradient mb={1}>
@@ -44,10 +50,11 @@ const FormUsers = () => {
             <VuiBox sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2 }}>
                 <VuiBox>
                     <VuiTypography variant="body2" color="info" textGradient mb={1}>
-                        Nome
+                        Password
                     </VuiTypography>
                     <VuiInput
                         placeholder="Digite o nome completo..."
+                        type="password"
                         size="medium"
                         fullWidth
                         sx={{
@@ -62,10 +69,11 @@ const FormUsers = () => {
 
                 <VuiBox>
                     <VuiTypography variant="body2" color="info" textGradient mb={1}>
-                        Email
+                        Role
                     </VuiTypography>
-                    <VuiInput
-                        placeholder="Digite o email..."
+                    <Select
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
                         fullWidth
                         sx={{
                             backgroundColor: "transparent",
@@ -74,11 +82,15 @@ const FormUsers = () => {
                                 fontSize: "0.875rem"
                             }
                         }}
-                    />
+                    >
+                        <MenuItem value="paciente">Paciente</MenuItem>
+                        <MenuItem value="médico">Médico</MenuItem>
+                        <MenuItem value="admin">Admin</MenuItem>
+                    </Select>
                 </VuiBox>
             </VuiBox>
         </VuiBox>
     )
 }
-    
+
 export default FormUsers;   
