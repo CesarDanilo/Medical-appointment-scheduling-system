@@ -53,7 +53,7 @@ const FormUsers = () => {
                         Password
                     </VuiTypography>
                     <VuiInput
-                        placeholder="Digite o nome completo..."
+                        placeholder="Digite o password..."
                         type="password"
                         size="medium"
                         fullWidth
@@ -75,13 +75,13 @@ const FormUsers = () => {
                         value={role}
                         onChange={(e) => setRole(e.target.value)}
                         fullWidth
-                        // sx={{
-                        //     backgroundColor: "transparent",
-                        //     "& .MuiInputBase-input": {
-                        //         py: 1.5,
-                        //         fontSize: "0.875rem"
-                        //     }
-                        // }}
+                        sx={{
+                            backgroundColor: "transparent",
+                            "& .MuiInputBase-input": {
+                                py: 1.5,
+                                fontSize: "0.875rem"
+                            }
+                        }}
                     >
                         <MenuItem value="paciente">Paciente</MenuItem>
                         <MenuItem value="médico">Médico</MenuItem>
