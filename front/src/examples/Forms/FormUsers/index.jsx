@@ -1,16 +1,18 @@
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiInput from "components/VuiInput";
+import VuiButton from "components/VuiButton";
 import { Select, MenuItem } from "@mui/material";
 import { Type } from "ajv/dist/compile/util";
 import { Password } from "@mui/icons-material";
+import Icon from "@mui/material/Icon";
 import { useState } from "react";
 
 const FormUsers = () => {
     const [role, setRole] = useState("paciente"); // Estado inicial
 
     return (
-        <VuiBox sx={{ width: "100%", maxWidth: "400px", mx: "auto", display: "flex", flexDirection: "column", gap: 2}}>
+        <VuiBox sx={{ width: "100%", maxWidth: "400px", mx: "auto", display: "flex", flexDirection: "column", gap: 2 }}>
             <VuiBox sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2 }}>
                 <VuiBox>
                     <VuiTypography variant="body2" color="info" textGradient mb={1}>
@@ -88,6 +90,25 @@ const FormUsers = () => {
                         <MenuItem value="admin">Admin</MenuItem>
                     </Select>
                 </VuiBox>
+            </VuiBox>
+            <VuiBox display="flex" alignItems="center" gap={1}>
+                <VuiButton
+                    color="info"
+                    size="large"
+                    variant="text"
+                    circular
+                    iconOnly
+                >
+                    <Icon fontSize="small">add_circle</Icon>
+                </VuiButton>
+                <VuiButton
+                    color="success"
+                    size="medium"
+                    variant="outlined"
+                    iconOnly
+                >
+                    <Icon fontSize="small">checkCircleIcon</Icon>
+                </VuiButton>
             </VuiBox>
         </VuiBox>
     )
