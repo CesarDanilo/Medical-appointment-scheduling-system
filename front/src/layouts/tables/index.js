@@ -81,7 +81,7 @@ function Tables() {
                 },
                 minHeight: loading ? "200px" : "auto",
                 display: "flex",
-                flexDirection: "column",
+                flexDirection: "row",
                 justifyContent: loading ? "center" : "flex-start",
                 alignItems: loading ? "center" : "flex-start",
                 p: 3,
