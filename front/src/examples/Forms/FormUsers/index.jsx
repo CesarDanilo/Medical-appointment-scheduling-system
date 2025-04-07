@@ -22,7 +22,7 @@ const FormUsers = () => {
                         fullWidth
                         sx={{
                             backgroundColor: "transparent",
-                            "& .MuiInputBase-input": {
+                            "& .MuiInputBase-input": {  
                                 py: 1.5,
                                 fontSize: "0.875rem"
                             }
