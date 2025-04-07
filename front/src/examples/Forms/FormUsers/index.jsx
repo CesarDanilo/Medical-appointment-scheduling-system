@@ -6,8 +6,20 @@ import { Select, MenuItem } from "@mui/material";
 import Icon from "@mui/material/Icon";
 import { useState } from "react";
 
+import saveUserToDatabase from "functions/saveUserToDatabase";
+
 const FormUsers = () => {
-    const [role, setRole] = useState("Paciente"); 
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [passworld, setPassworld] = useState("");
+    const [role, setRole] = useState("Paciente");
+
+    const handleSaveUserData = () => {
+        const dados = {
+
+        }
+        saveUserToDatabase(dados);
+    }
 
     return (
         <VuiBox sx={{ width: "100%", maxWidth: "400px", mx: "auto", display: "flex", flexDirection: "column", gap: 2 }}>
@@ -22,7 +34,7 @@ const FormUsers = () => {
                         fullWidth
                         sx={{
                             backgroundColor: "transparent",
-                            "& .MuiInputBase-input": {  
+                            "& .MuiInputBase-input": {
                                 py: 1.5,
                                 fontSize: "0.875rem"
                             }
@@ -97,7 +109,7 @@ const FormUsers = () => {
                     <VuiBox display="flex" alignItems="center" gap={1} sx={{ height: "100%" }}>
                         <VuiButton
                             color="info"
-                            size="medium"  
+                            size="medium"
                             variant="text"
                             circular
                             iconOnly
@@ -107,7 +119,7 @@ const FormUsers = () => {
                         </VuiButton>
                         <VuiButton
                             color="success"
-                            size="medium"  
+                            size="medium"
                             variant="outlined"
                             iconOnly
                             sx={{ height: "2.25rem", width: "2.25rem" }}  // Altura igual ao Select
