@@ -53,6 +53,7 @@ const FormUsers = () => {
                     <VuiInput
                         placeholder="Digite o email..."
                         fullWidth
+                        onChange={(e) => setEmail(e.target.value)}
                         sx={{
                             backgroundColor: "transparent",
                             "& .MuiInputBase-input": {
@@ -73,6 +74,7 @@ const FormUsers = () => {
                         type="password"
                         size="medium"
                         fullWidth
+                        onChange={(e) => setPassword(e.target.value)}
                         sx={{
                             backgroundColor: "transparent",
                             "& .MuiInputBase-input": {
