@@ -69,47 +69,57 @@ const FormUsers = () => {
                     />
                 </VuiBox>
 
-                <VuiBox>
-                    <VuiTypography variant="body2" color="info" textGradient mb={1}>
-                        Role
-                    </VuiTypography>
-                    <Select
-                        value={role}
-                        onChange={(e) => setRole(e.target.value)}
-                        fullWidth
-                        sx={{
-                            backgroundColor: "transparent",
-                            "& .MuiInputBase-input": {
-                                py: 1.5,
-                                fontSize: "0.875rem"
-                            }
-                        }}
-                    >
-                        <MenuItem value="paciente">Paciente</MenuItem>
-                        <MenuItem value="médico">Médico</MenuItem>
-                        <MenuItem value="admin">Admin</MenuItem>
-                    </Select>
+                <VuiBox display="flex" justifyContent="space-between" alignItems="flex-end" gap={1}>
+                    <VuiBox flex={1}>
+                        <VuiTypography variant="body2" color="info" textGradient mb={1}>
+                            Role
+                        </VuiTypography>
+                        <Select
+                            value={role}
+                            onChange={(e) => setRole(e.target.value)}
+                            fullWidth
+                            sx={{
+                                backgroundColor: "transparent",
+                                "& .MuiInputBase-input": {
+                                    py: 1,  // Reduzi o padding vertical
+                                    fontSize: "0.875rem",
+                                    height: "1.5rem",  // Altura menor para o input
+                                },
+                                "& .MuiOutlinedInput-root": {
+                                    height: "2.25rem",  // Altura total menor para o Select
+                                }
+                            }}
+                        >
+                            <MenuItem value="paciente">Paciente</MenuItem>
+                            <MenuItem value="médico">Médico</MenuItem>
+                            <MenuItem value="admin">Admin</MenuItem>
+                        </Select>
+                    </VuiBox>
+                    {/* BOTAO DE ADICIONAR E SALVAR */}
+                    <VuiBox display="flex" alignItems="center" gap={1} sx={{ height: "100%" }}>
+                        <VuiButton
+                            color="info"
+                            size="small"  // Mudei para small
+                            variant="text"
+                            circular
+                            iconOnly
+                            sx={{ height: "2.25rem", width: "2.25rem" }}  // Altura igual ao Select
+                        >
+                            <Icon fontSize="small">add_circle</Icon>
+                        </VuiButton>
+                        <VuiButton
+                            color="success"
+                            size="medium"  // Mudei para small
+                            variant="outlined"
+                            iconOnly
+                            sx={{ height: "2.25rem", width: "2.25rem" }}  // Altura igual ao Select
+                        >
+                            <Icon fontSize="small">checkCircleIcon</Icon>
+                        </VuiButton>
+                    </VuiBox>
                 </VuiBox>
             </VuiBox>
-            <VuiBox display="flex" alignItems="center" gap={1}>
-                <VuiButton
-                    color="info"
-                    size="large"
-                    variant="text"
-                    circular
-                    iconOnly
-                >
-                    <Icon fontSize="small">add_circle</Icon>
-                </VuiButton>
-                <VuiButton
-                    color="success"
-                    size="medium"
-                    variant="outlined"
-                    iconOnly
-                >
-                    <Icon fontSize="small">checkCircleIcon</Icon>
-                </VuiButton>
-            </VuiBox>
+
         </VuiBox>
     )
 }
