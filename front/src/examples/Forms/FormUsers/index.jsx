@@ -11,12 +11,15 @@ import saveUserToDatabase from "functions/saveUserToDatabase";
 const FormUsers = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [passworld, setPassworld] = useState("");
+    const [password, setPassword] = useState("");
     const [role, setRole] = useState("Paciente");
 
     const handleSaveUserData = () => {
         const dados = {
-
+            name: name,
+            email: email,
+            password: password,
+            role: role
         }
         saveUserToDatabase(dados);
     }
@@ -32,6 +35,7 @@ const FormUsers = () => {
                         placeholder="Digite o nome completo..."
                         size="medium"
                         fullWidth
+                        onChange={(e) => setName(e.target.value)}
                         sx={{
                             backgroundColor: "transparent",
                             "& .MuiInputBase-input": {
@@ -123,6 +127,7 @@ const FormUsers = () => {
                             variant="outlined"
                             iconOnly
                             sx={{ height: "2.25rem", width: "2.25rem" }}  // Altura igual ao Select
+                            onClick={handleSaveUserData}
                         >
                             <Icon fontSize="small">checkCircleIcon</Icon>
                         </VuiButton>
