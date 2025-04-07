@@ -3,13 +3,11 @@ import VuiTypography from "components/VuiTypography";
 import VuiInput from "components/VuiInput";
 import VuiButton from "components/VuiButton";
 import { Select, MenuItem } from "@mui/material";
-import { Type } from "ajv/dist/compile/util";
-import { Password } from "@mui/icons-material";
 import Icon from "@mui/material/Icon";
 import { useState } from "react";
 
 const FormUsers = () => {
-    const [role, setRole] = useState("paciente"); // Estado inicial
+    const [role, setRole] = useState("Paciente"); 
 
     return (
         <VuiBox sx={{ width: "100%", maxWidth: "400px", mx: "auto", display: "flex", flexDirection: "column", gap: 2 }}>
@@ -72,7 +70,7 @@ const FormUsers = () => {
                 <VuiBox display="flex" justifyContent="space-between" alignItems="flex-end" gap={1}>
                     <VuiBox flex={1}>
                         <VuiTypography variant="body2" color="info" textGradient mb={1}>
-                            Role
+                            Tipo
                         </VuiTypography>
                         <Select
                             value={role}
@@ -99,7 +97,7 @@ const FormUsers = () => {
                     <VuiBox display="flex" alignItems="center" gap={1} sx={{ height: "100%" }}>
                         <VuiButton
                             color="info"
-                            size="small"  // Mudei para small
+                            size="medium"  
                             variant="text"
                             circular
                             iconOnly
@@ -109,7 +107,7 @@ const FormUsers = () => {
                         </VuiButton>
                         <VuiButton
                             color="success"
-                            size="medium"  // Mudei para small
+                            size="medium"  
                             variant="outlined"
                             iconOnly
                             sx={{ height: "2.25rem", width: "2.25rem" }}  // Altura igual ao Select
