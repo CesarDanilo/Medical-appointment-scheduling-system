@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 // Vision UI Components
 import VuiBox from "components/VuiBox";
+import VuiAlert from "components/VuiAlert";
 import VuiTypography from "components/VuiTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -29,6 +30,7 @@ function Tables() {
       <VuiBox py={3}>
         <VuiBox mb={3}>
           <Card>
+            <VuiAlert color="">This is an alert!</VuiAlert>
             <VuiBox
               display="flex"
               justifyContent="space-between"

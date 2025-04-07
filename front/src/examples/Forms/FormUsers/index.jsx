@@ -4,6 +4,7 @@ import VuiInput from "components/VuiInput";
 import VuiButton from "components/VuiButton";
 import { Select, MenuItem } from "@mui/material";
 import Icon from "@mui/material/Icon";
+
 import { useState } from "react";
 
 import saveUserToDatabase from "functions/saveUserToDatabase";
@@ -21,7 +22,9 @@ const FormUsers = () => {
             password: password,
             role: role
         }
-        saveUserToDatabase(dados);
+        if (saveUserToDatabase(dados)) {
+            return window.alert("GRAVADO COM SÚCESSO");
+        }
     }
 
     return (
@@ -136,7 +139,6 @@ const FormUsers = () => {
                     </VuiBox>
                 </VuiBox>
             </VuiBox>
-
         </VuiBox>
     )
 }
