@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -14,15 +14,31 @@ import FormUsers from "examples/Forms/FormUsers";
 
 // Data
 import useAuthorsTableData from "layouts/tables/data/authorsTableData";
-import { Directions } from "@mui/icons-material";
 
 function Tables() {
   const [refreshCount, setRefreshCount] = useState(0);
   const { columns, rows, loading, error } = useAuthorsTableData(refreshCount);
+  const [save, setSave] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleRefresh = () => {
     setRefreshCount(prev => prev + 1);
   };
+
+  useEffect(() => {
+    if (save) {
+      handleRefresh();
+      setShowAlert(true);
+      setSave(false);
+
+      // Esconde o alerta após 5 segundos
+      const timer = setTimeout(() => {
+        setShowAlert(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [save]);
 
   return (
     <DashboardLayout>
@@ -30,14 +46,23 @@ function Tables() {
       <VuiBox py={3}>
         <VuiBox mb={3}>
           <Card>
-            <VuiAlert color="">This is an alert!</VuiAlert>
+            {showAlert && (
+              <VuiAlert
+                color="success"
+                dismissible
+                onClose={() => setShowAlert(false)}
+              >
+                Operação realizada com sucesso!
+              </VuiAlert>
+            )}
+
             <VuiBox
               display="flex"
               justifyContent="space-between"
               alignItems="center"
               p={3}
             >
-              <VuiTypography variant="lg" color="white">
+              <VuiTypography variant="h6" color="white">
                 Usuários
               </VuiTypography>
               <VuiBox display="flex" alignItems="center">
@@ -87,11 +112,10 @@ function Tables() {
                 justifyContent: loading ? "center" : "flex-start",
                 alignItems: loading ? "center" : "flex-start",
                 p: 3,
-                gap: 3 // Add some spacing between components
+                gap: 3
               }}
             >
-              {/* componente que vai ficar responsavel pelo cadastro de usuario */}
-              <FormUsers />
+              <FormUsers save={save} setSave={setSave} />
 
               {loading ? (
                 <CircularProgress color="info" />

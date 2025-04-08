@@ -4,37 +4,73 @@ import VuiInput from "components/VuiInput";
 import VuiButton from "components/VuiButton";
 import { Select, MenuItem } from "@mui/material";
 import Icon from "@mui/material/Icon";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 import saveUserToDatabase from "functions/saveUserToDatabase";
 
-const FormUsers = () => {
+const FormUsers = ({ save, setSave }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState("Paciente");
+    const [role, setRole] = useState("paciente");
 
-    const handleSaveUserData = () => {
+    const handleSaveUserData = async () => {
+        if (!name || !email || !password) {
+            alert("Por favor, preencha todos os campos obrigatórios");
+            return;
+        }
+
         const dados = {
-            name: name,
-            email: email,
+            name: name.trim(),
+            email: email.trim(),
             password: password,
             role: role
+        };
+
+        try {
+            const success = await saveUserToDatabase(dados);
+            if (success) {
+                setSave(!save);
+                // Limpar formulário após salvar
+                setName("");
+                setEmail("");
+                setPassword("");
+                setRole("paciente");
+            }
+        } catch (error) {
+            console.error("Erro ao salvar usuário:", error);
+            alert("Ocorreu um erro ao salvar o usuário");
         }
-        if (saveUserToDatabase(dados)) {
-            return window.alert("GRAVADO COM SÚCESSO");
-        }
-    }
+    };
 
     return (
-        <VuiBox sx={{ width: "100%", maxWidth: "400px", mx: "auto", display: "flex", flexDirection: "column", gap: 2 }}>
+        <VuiBox sx={{
+            width: "100%",
+            maxWidth: "400px",
+            mx: "auto",
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            p: 2,
+            // backgroundColor: "background.default",
+            borderRadius: "12px",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.1)"
+        }}>
+            <VuiTypography variant="h6" color="white" mb={2}>
+                Cadastrar Novo Usuário
+            </VuiTypography>
+
             <VuiBox sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2 }}>
                 <VuiBox>
                     <VuiTypography variant="body2" color="info" textGradient mb={1}>
-                        Nome
+                        Nome *
                     </VuiTypography>
                     <VuiInput
+                        value={name}
                         placeholder="Digite o nome completo..."
                         size="medium"
                         fullWidth
@@ -51,10 +87,12 @@ const FormUsers = () => {
 
                 <VuiBox>
                     <VuiTypography variant="body2" color="info" textGradient mb={1}>
-                        Email
+                        Email *
                     </VuiTypography>
                     <VuiInput
+                        value={email}
                         placeholder="Digite o email..."
+                        type="email"
                         fullWidth
                         onChange={(e) => setEmail(e.target.value)}
                         sx={{
@@ -66,14 +104,14 @@ const FormUsers = () => {
                         }}
                     />
                 </VuiBox>
-            </VuiBox>
-            <VuiBox sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2 }}>
+
                 <VuiBox>
                     <VuiTypography variant="body2" color="info" textGradient mb={1}>
-                        Password
+                        Senha *
                     </VuiTypography>
                     <VuiInput
-                        placeholder="Digite o password..."
+                        value={password}
+                        placeholder="Digite a senha..."
                         type="password"
                         size="medium"
                         fullWidth
@@ -100,21 +138,21 @@ const FormUsers = () => {
                             sx={{
                                 backgroundColor: "transparent",
                                 "& .MuiInputBase-input": {
-                                    py: 1,  // Reduzi o padding vertical
+                                    py: 1,
                                     fontSize: "0.875rem",
-                                    height: "1.5rem",  // Altura menor para o input
+                                    height: "1.5rem",
                                 },
                                 "& .MuiOutlinedInput-root": {
-                                    height: "2.25rem",  // Altura total menor para o Select
+                                    height: "2.25rem",
                                 }
                             }}
                         >
                             <MenuItem value="paciente">Paciente</MenuItem>
                             <MenuItem value="médico">Médico</MenuItem>
-                            <MenuItem value="admin">Admin</MenuItem>
+                            <MenuItem value="admin">Administrador</MenuItem>
                         </Select>
                     </VuiBox>
-                    {/* BOTAO DE ADICIONAR E SALVAR */}
+
                     <VuiBox display="flex" alignItems="center" gap={1} sx={{ height: "100%" }}>
                         <VuiButton
                             color="info"
@@ -122,25 +160,30 @@ const FormUsers = () => {
                             variant="text"
                             circular
                             iconOnly
-                            sx={{ height: "2.25rem", width: "2.25rem" }}  // Altura igual ao Select
+                            sx={{ height: "2.25rem", width: "2.25rem" }}
                         >
-                            <Icon fontSize="small">add_circle</Icon>
+                            <AddCircleIcon fontSize="small" />
                         </VuiButton>
                         <VuiButton
                             color="success"
                             size="medium"
-                            variant="outlined"
+                            variant="contained"
                             iconOnly
-                            sx={{ height: "2.25rem", width: "2.25rem" }}  // Altura igual ao Select
+                            sx={{ height: "2.25rem", width: "2.25rem" }}
                             onClick={handleSaveUserData}
                         >
-                            <Icon fontSize="small">checkCircleIcon</Icon>
+                            <CheckCircleIcon fontSize="small" />
                         </VuiButton>
                     </VuiBox>
                 </VuiBox>
             </VuiBox>
         </VuiBox>
-    )
-}
+    );
+};
 
-export default FormUsers;   
+FormUsers.propTypes = {
+    save: PropTypes.bool.isRequired,
+    setSave: PropTypes.func.isRequired
+};
+
+export default FormUsers;
