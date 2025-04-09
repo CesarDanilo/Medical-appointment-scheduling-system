@@ -60,9 +60,9 @@ const FormUsers = ({ save, setSave }) => {
             borderRadius: "12px",
             boxShadow: "0 4px 20px rgba(0,0,0,0.1)"
         }}>
-            <VuiTypography variant="h6" color="white" mb={2}>
+            {/* <VuiTypography variant="h6" color="white" mb={2}>
                 Cadastrar Novo Usuário
-            </VuiTypography>
+            </VuiTypography> */}
 
             <VuiBox sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 2 }}>
                 <VuiBox>
