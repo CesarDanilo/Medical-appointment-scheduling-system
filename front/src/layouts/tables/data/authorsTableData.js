@@ -4,10 +4,6 @@ import VuiAvatar from "components/VuiAvatar";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-function Author({ image, name, email }) {
-  // (seu componente Author existente...)
-}
-
 const useAuthorsTableData = (refreshFlag) => {
   const [tableData, setTableData] = useState({
     columns: [

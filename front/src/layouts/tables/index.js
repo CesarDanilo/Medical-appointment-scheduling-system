@@ -14,6 +14,8 @@ import FormUsers from "examples/Forms/FormUsers";
 
 // Data
 import useAuthorsTableData from "layouts/tables/data/authorsTableData";
+import handleDeleteUser from "functions/deleteUserToDatabase";
+
 
 function Tables() {
   const [refreshCount, setRefreshCount] = useState(0);
@@ -124,6 +126,7 @@ function Tables() {
                   columns={columns}
                   rows={rows}
                   maxHeight={"450px"}
+                  onDelete={handleDeleteUser}
                   sx={{
                     width: '100%',
                     '& .MuiTableCell-root': {

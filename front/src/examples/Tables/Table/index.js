@@ -19,10 +19,16 @@ import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 import borders from "assets/theme/base/borders";
 
-function Table({ columns, rows, maxHeight }) {
+function Table({ columns, rows, maxHeight, onDelete }) {
   const { grey } = colors;
   const { size, fontWeightBold } = typography;
   const { borderWidth } = borders;
+
+  const handleDelete = (rowIndex) => {
+    if (window.confirm("Tem certeza que deseja deletar este usuário?")) {
+      onDelete(rowIndex);
+    }
+  };
 
   const renderColumns = columns.map(({ name, align, width }, key) => {
     const pl = key === 0 ? 3 : 1;
@@ -49,8 +55,8 @@ function Table({ columns, rows, maxHeight }) {
     );
   });
 
-  const renderRows = rows.map((row, key) => {
-    const rowKey = `row-${key}`;
+  const renderRows = rows.map((row, rowIndex) => {
+    const rowKey = `row-${rowIndex}`;
     const hasBorder = row.hasBorder || false;
 
     const tableCells = columns.map(({ name, align }) => {
@@ -87,21 +93,22 @@ function Table({ columns, rows, maxHeight }) {
           <VuiBox display="flex" alignItems="center" gap={1}>
             <VuiButton
               color="info"
-              size="small"
+              size="medium"
               variant="text"
               circular
               iconOnly
             >
-              <Icon fontSize="small">edit</Icon>
+              <Icon fontSize="medium">edit</Icon>
             </VuiButton>
             <VuiButton
               color="error"
-              size="small"
+              size="medium"
               variant="text"
               circular
               iconOnly
+              onClick={() => handleDelete(rowIndex)}
             >
-              <Icon fontSize="small">delete</Icon>
+              <Icon fontSize="medium">delete</Icon>
             </VuiButton>
           </VuiBox>
         </VuiBox>
@@ -152,7 +159,7 @@ function Table({ columns, rows, maxHeight }) {
         </MuiTable>
       </TableContainer>
     ),
-    [columns, rows, maxHeight]
+    [columns, rows, maxHeight, onDelete]
   );
 }
 
@@ -160,12 +167,14 @@ Table.defaultProps = {
   columns: [],
   rows: [{}],
   maxHeight: "400px",
+  onDelete: () => { } // Função vazia como padrão
 };
 
 Table.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.object),
   rows: PropTypes.arrayOf(PropTypes.object),
   maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onDelete: PropTypes.func // Adicionamos a prop para a função de deletar
 };
 
-export default Table;
+export default Table; 
