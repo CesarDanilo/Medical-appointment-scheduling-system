@@ -19,7 +19,7 @@ import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 import borders from "assets/theme/base/borders";
 
-function Table({ columns, rows }) {
+function Table({ columns, rows, maxHeight }) {
   const { grey } = colors;
   const { size, fontWeightBold } = typography;
   const { borderWidth } = borders;
@@ -111,8 +111,24 @@ function Table({ columns, rows }) {
 
   return useMemo(
     () => (
-      <TableContainer>
-        <MuiTable sx={{ tableLayout: 'auto' }}>
+      <TableContainer
+        sx={{
+          maxHeight: maxHeight,
+          overflow: "auto",
+          "&::-webkit-scrollbar": {
+            width: "8px",
+            height: "8px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: grey[600],
+            borderRadius: "4px",
+          },
+          "&::-webkit-scrollbar-track": {
+            backgroundColor: grey[800],
+          }
+        }}
+      >
+        <MuiTable sx={{ tableLayout: 'auto' }} stickyHeader>
           <VuiBox component="thead">
             <TableRow>
               {renderColumns}
@@ -136,18 +152,20 @@ function Table({ columns, rows }) {
         </MuiTable>
       </TableContainer>
     ),
-    [columns, rows]
+    [columns, rows, maxHeight]
   );
 }
 
 Table.defaultProps = {
   columns: [],
   rows: [{}],
+  maxHeight: "400px",
 };
 
 Table.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.object),
   rows: PropTypes.arrayOf(PropTypes.object),
+  maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default Table;
