@@ -24,9 +24,20 @@ function Table({ columns, rows, maxHeight, onDelete }) {
   const { size, fontWeightBold } = typography;
   const { borderWidth } = borders;
 
-  const handleDelete = (rowIndex) => {
+  const handleDelete = async (userId) => {
+    console.log("ID do usuário a ser deletado:", userId);
+
+    if (!userId) {
+      console.error("ID do usuário não definido");
+      return;
+    }
+
     if (window.confirm("Tem certeza que deseja deletar este usuário?")) {
-      onDelete(rowIndex);
+      try {
+        await onDelete(userId);
+      } catch (error) {
+        console.error("Erro ao deletar usuário:", error);
+      }
     }
   };
 
@@ -106,7 +117,7 @@ function Table({ columns, rows, maxHeight, onDelete }) {
               variant="text"
               circular
               iconOnly
-              onClick={() => handleDelete(rowIndex)}
+              onClick={() => handleDelete(row.id)}
             >
               <Icon fontSize="medium">delete</Icon>
             </VuiButton>
@@ -167,14 +178,14 @@ Table.defaultProps = {
   columns: [],
   rows: [{}],
   maxHeight: "400px",
-  onDelete: () => { } // Função vazia como padrão
+  onDelete: () => { }
 };
 
 Table.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.object),
   rows: PropTypes.arrayOf(PropTypes.object),
   maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onDelete: PropTypes.func // Adicionamos a prop para a função de deletar
+  onDelete: PropTypes.func
 };
 
-export default Table; 
+export default Table;

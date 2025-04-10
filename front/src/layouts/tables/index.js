@@ -1,39 +1,48 @@
 import { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CircularProgress from "@mui/material/CircularProgress";
-
-// Vision UI Components
 import VuiBox from "components/VuiBox";
 import VuiAlert from "components/VuiAlert";
 import VuiTypography from "components/VuiTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
 import Table from "examples/Tables/Table";
 import FormUsers from "examples/Forms/FormUsers";
-
-// Data
 import useAuthorsTableData from "layouts/tables/data/authorsTableData";
 import handleDeleteUser from "functions/deleteUserToDatabase";
-
 
 function Tables() {
   const [refreshCount, setRefreshCount] = useState(0);
   const { columns, rows, loading, error } = useAuthorsTableData(refreshCount);
   const [save, setSave] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertColor, setAlertColor] = useState("success");
 
   const handleRefresh = () => {
     setRefreshCount(prev => prev + 1);
   };
 
+  const handleUserDelete = async (userId) => {
+    const result = await handleDeleteUser(userId);
+
+    setAlertMessage(result.message);
+    setAlertColor(result.success ? "success" : "error");
+    setShowAlert(true);
+
+    if (result.success) {
+      handleRefresh();
+    }
+  };
+
   useEffect(() => {
     if (save) {
       handleRefresh();
+      setAlertMessage("Operação realizada com sucesso!");
+      setAlertColor("success");
       setShowAlert(true);
       setSave(false);
 
-      // Esconde o alerta após 5 segundos
       const timer = setTimeout(() => {
         setShowAlert(false);
       }, 5000);
@@ -118,29 +127,23 @@ function Tables() {
               }}
             >
               <FormUsers save={save} setSave={setSave} />
-
-              {loading ? (
-                <CircularProgress color="info" />
-              ) : (
-                <Table
-                  columns={columns}
-                  rows={rows}
-                  maxHeight={"450px"}
-                  onDelete={handleDeleteUser}
-                  sx={{
-                    width: '100%',
-                    '& .MuiTableCell-root': {
-                      py: 1.5,
-                      fontSize: '0.875rem'
-                    }
-                  }}
-                />
-              )}
+              <Table
+                columns={columns}
+                rows={rows}
+                maxHeight={"450px"}
+                onDelete={handleUserDelete}
+                sx={{
+                  width: '100%',
+                  '& .MuiTableCell-root': {
+                    py: 1.5,
+                    fontSize: '0.875rem'
+                  }
+                }}
+              />
             </VuiBox>
           </Card>
         </VuiBox>
       </VuiBox>
-      {/* <Footer /> */}
     </DashboardLayout>
   );
 }

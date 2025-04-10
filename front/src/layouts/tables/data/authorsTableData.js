@@ -1,6 +1,5 @@
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
-import VuiAvatar from "components/VuiAvatar";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -29,7 +28,8 @@ const useAuthorsTableData = (refreshFlag) => {
 
       const users = response.data.data;
 
-      const formattedRows = users.map((user, index) => ({
+      const formattedRows = users.map((user) => ({
+        id: user._id || user.id, // ADICIONADO: Garante que o ID está incluído
         name: (
           <VuiTypography variant="caption" color="text" fontWeight="medium">
             {user.name}
@@ -60,6 +60,7 @@ const useAuthorsTableData = (refreshFlag) => {
       });
 
     } catch (error) {
+      console.error("Erro ao buscar usuários:", error);
       setTableData({
         columns: tableData.columns,
         rows: [],
