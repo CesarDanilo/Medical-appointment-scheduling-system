@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Card from "@mui/material/Card";
 import CircularProgress from "@mui/material/CircularProgress";
 import VuiBox from "components/VuiBox";
@@ -18,17 +18,37 @@ function Tables() {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertColor, setAlertColor] = useState("success");
+  const [timeoutId, setTimeoutId] = useState(null);
 
   const handleRefresh = () => {
     setRefreshCount(prev => prev + 1);
   };
 
+  const showNotification = useCallback((message, color) => {
+    // Limpa qualquer timeout existente
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    setAlertMessage(message);
+    setAlertColor(color);
+    setShowAlert(true);
+
+    // Configura novo timeout para esconder após 2 segundos
+    const newTimeoutId = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+
+    setTimeoutId(newTimeoutId);
+  }, [timeoutId]);
+
   const handleUserDelete = async (userId) => {
     const result = await handleDeleteUser(userId);
 
-    setAlertMessage(result.message);
-    setAlertColor(result.success ? "success" : "error");
-    setShowAlert(true);
+    showNotification(
+      result.message,
+      result.success ? "success" : "error"
+    );
 
     if (result.success) {
       handleRefresh();
@@ -38,18 +58,19 @@ function Tables() {
   useEffect(() => {
     if (save) {
       handleRefresh();
-      setAlertMessage("Operação realizada com sucesso!");
-      setAlertColor("success");
-      setShowAlert(true);
+      showNotification("Operação realizada com sucesso!", "success");
       setSave(false);
-
-      const timer = setTimeout(() => {
-        setShowAlert(false);
-      }, 5000);
-
-      return () => clearTimeout(timer);
     }
-  }, [save]);
+  }, [save, showNotification]);
+
+  useEffect(() => {
+    return () => {
+      // Limpa o timeout quando o componente desmontar
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [timeoutId]);
 
   return (
     <DashboardLayout>
@@ -59,11 +80,16 @@ function Tables() {
           <Card>
             {showAlert && (
               <VuiAlert
-                color="success"
+                color={alertColor}
                 dismissible
-                onClose={() => setShowAlert(false)}
+                onClose={() => {
+                  setShowAlert(false);
+                  if (timeoutId) {
+                    clearTimeout(timeoutId);
+                  }
+                }}
               >
-                Operação realizada com sucesso!
+                {alertMessage}
               </VuiAlert>
             )}
 
