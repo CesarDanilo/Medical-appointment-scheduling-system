@@ -10,6 +10,7 @@ import Table from "examples/Tables/Table";
 import FormUsers from "examples/Forms/FormUsers";
 import useAuthorsTableData from "layouts/tables/data/authorsTableData";
 import handleDeleteUser from "functions/deleteUserToDatabase";
+import updateUserToDatabase from "functions/updateUserToDatabase";
 
 function Tables() {
   const [refreshCount, setRefreshCount] = useState(0);
@@ -54,6 +55,15 @@ function Tables() {
       handleRefresh();
     }
   };
+
+  const handleUpdateUser = async (userId, data) => {
+    try {
+      const response = await updateUserToDatabase(userId, data);
+
+    } catch (error) {
+      return error
+    }
+  }
 
   useEffect(() => {
     if (save) {
