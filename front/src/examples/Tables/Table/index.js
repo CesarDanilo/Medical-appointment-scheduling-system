@@ -170,7 +170,7 @@ function Table({ columns, rows, maxHeight, onDelete }) {
         </MuiTable>
       </TableContainer>
     ),
-    [columns, rows, maxHeight, onDelete]
+    [columns, rows, maxHeight, onDelete, onUpdate]
   );
 }
 

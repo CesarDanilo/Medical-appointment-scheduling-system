@@ -58,8 +58,12 @@ function Tables() {
 
   const handleUpdateUser = async (userId, data) => {
     try {
-      const response = await updateUserToDatabase(userId, data);
+      const result = await updateUserToDatabase(userId, data);
 
+      if (result.success) {
+        handleRefresh();
+      }
+      
     } catch (error) {
       return error
     }
