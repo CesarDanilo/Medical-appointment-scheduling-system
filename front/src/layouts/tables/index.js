@@ -11,6 +11,7 @@ import FormUsers from "examples/Forms/FormUsers";
 import useAuthorsTableData from "layouts/tables/data/authorsTableData";
 import handleDeleteUser from "functions/deleteUserToDatabase";
 import updateUserToDatabase from "functions/updateUserToDatabase";
+import getUserToDatabase from "functions/getUserToDatabase";
 import axios from "axios";
 
 function Tables() {
@@ -59,7 +60,14 @@ function Tables() {
 
   const handleUpdateUser = async (userId) => {
     try {
-      const getUserData = await axios.get();
+      if (userId) {
+        try {
+          const response = await getUserToDatabase(userId);
+          console.log(response);
+        } catch (error) {
+          console.log(error)
+        }
+      }
 
       // const result = await updateUserToDatabase(userId);
 
