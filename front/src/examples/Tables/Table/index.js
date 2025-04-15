@@ -19,7 +19,7 @@ import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 import borders from "assets/theme/base/borders";
 
-function Table({ columns, rows, maxHeight, onDelete }) {
+function Table({ columns, rows, maxHeight, onDelete, onUpdate }) {
   const { grey } = colors;
   const { size, fontWeightBold } = typography;
   const { borderWidth } = borders;
@@ -40,6 +40,14 @@ function Table({ columns, rows, maxHeight, onDelete }) {
       }
     }
   };
+
+  const handleUpdate = async (userId) => {
+    try {
+      await onUpdate(userId);
+    } catch (error) {
+      console.error("Erro ao editar usuário:", error);
+    }
+  }
 
   const renderColumns = columns.map(({ name, align, width }, key) => {
     const pl = key === 0 ? 3 : 1;
@@ -108,6 +116,7 @@ function Table({ columns, rows, maxHeight, onDelete }) {
               variant="text"
               circular
               iconOnly
+              onClick={() => handleUpdate(row.id)}
             >
               <Icon fontSize="medium">edit</Icon>
             </VuiButton>

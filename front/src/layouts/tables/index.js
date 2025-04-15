@@ -63,7 +63,7 @@ function Tables() {
       if (result.success) {
         handleRefresh();
       }
-      
+
     } catch (error) {
       return error
     }
@@ -172,6 +172,7 @@ function Tables() {
                 rows={rows}
                 maxHeight={"450px"}
                 onDelete={handleUserDelete}
+                onUpdate={handleUpdateUser}
                 sx={{
                   width: '100%',
                   '& .MuiTableCell-root': {
