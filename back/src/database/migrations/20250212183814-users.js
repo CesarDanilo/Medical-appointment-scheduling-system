@@ -23,6 +23,10 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: false
       },
+      cpf: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+      },
       role: {
         type: Sequelize.STRING(50),
         allowNull: false,

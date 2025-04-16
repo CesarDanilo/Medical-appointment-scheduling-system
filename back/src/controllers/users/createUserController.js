@@ -7,7 +7,7 @@ const createUser = async (req, res, next) => {
         const data = req.body;
 
         // Verificação de campos obrigatórios
-        if (!data.name || !data.email || !data.password || !data.role) {
+        if (!data.name || !data.email || !data.password || !data.cpf || !data.role) {
             return res.status(400).json({
                 msg: "Não foi possível gravar! Todos os campos obrigatórios (name, email, password, role) precisam ser preenchidos.",
                 data: req.body  // Enviando o conteúdo dos dados recebidos
