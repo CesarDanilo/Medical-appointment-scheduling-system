@@ -23,6 +23,7 @@ function Tables() {
   const [alertColor, setAlertColor] = useState("success");
   const [timeoutId, setTimeoutId] = useState(null);
   const [userData, setUserData] = useState();
+  const [useIdUpdate, setUseIdUpdate] = useState();
 
   const handleRefresh = () => {
     setRefreshCount(prev => prev + 1);
@@ -65,6 +66,7 @@ function Tables() {
         try {
           const response = await getUserToDatabase(userId);
           setUserData(response.data);
+          setUseIdUpdate(userId);
         } catch (error) {
           console.log(error)
         }
@@ -178,7 +180,7 @@ function Tables() {
                 gap: 3
               }}
             >
-              <FormUsers save={save} setSave={setSave} userData={userData} />
+              <FormUsers save={save} setSave={setSave} userData={userData} useIdUpdate={useIdUpdate} />
               <Table
                 columns={columns}
                 rows={rows}

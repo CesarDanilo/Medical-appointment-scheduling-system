@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 
 import saveUserToDatabase from "functions/saveUserToDatabase";
 
-const FormUsers = ({ save, setSave, userData }) => {
+const FormUsers = ({ save, setSave, userData, useIdUpdate }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -32,7 +32,12 @@ const FormUsers = ({ save, setSave, userData }) => {
         };
 
         try {
-            const success = await saveUserToDatabase(dados);
+            let success;
+            if (useIdUpdate) {
+                success = await saveUserToDatabase(dados, useIdUpdate);
+            } else {
+                success = await saveUserToDatabase(dados);
+            }
             if (success) {
                 setSave(!save);
                 // Limpar formulário após salvar
