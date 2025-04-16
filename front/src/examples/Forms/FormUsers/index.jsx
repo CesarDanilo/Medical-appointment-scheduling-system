@@ -7,16 +7,16 @@ import Icon from "@mui/material/Icon";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import saveUserToDatabase from "functions/saveUserToDatabase";
 
-const FormUsers = ({ save, setSave }) => {
+const FormUsers = ({ save, setSave, userData }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState("paciente");
+    const [role, setRole] = useState("");
 
     const handleSaveUserData = async () => {
         if (!name || !email || !password) {
@@ -47,6 +47,15 @@ const FormUsers = ({ save, setSave }) => {
         }
     };
 
+    useEffect(() => {
+        if (userData) {
+            setName(userData[0].name);
+            setEmail(userData[0].email);
+            setPassword(userData[0].password);
+            setRole(userData[0].role);
+        }
+
+    }, [userData]);
     return (
         <VuiBox sx={{
             width: "100%",
