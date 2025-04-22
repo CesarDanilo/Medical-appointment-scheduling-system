@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
 import Card from "@mui/material/Card";
-import CircularProgress from "@mui/material/CircularProgress";
 import VuiBox from "components/VuiBox";
 import VuiAlert from "components/VuiAlert";
 import VuiTypography from "components/VuiTypography";
@@ -10,15 +9,12 @@ import Table from "examples/Tables/Table";
 import FormUsers from "examples/Forms/FormUsers";
 import useAuthorsTableData from "layouts/tables/data/authorsTableData";
 import handleDeleteUser from "functions/deleteUserToDatabase";
-import updateUserToDatabase from "functions/updateUserToDatabase";
 import getUserToDatabase from "functions/getUserToDatabase";
-import axios from "axios";
-import saveUserToDatabase from "functions/saveUserToDatabase";
 
 function Tables() {
   const [refreshCount, setRefreshCount] = useState(0);
   const { columns, rows, loading, error } = useAuthorsTableData(refreshCount);
-  const [save, setSave] = useState(false);
+  const [save, setSave] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertColor, setAlertColor] = useState("success");
@@ -27,78 +23,49 @@ function Tables() {
   const [useIdUpdate, setUseIdUpdate] = useState();
 
   const handleRefresh = () => {
-    setRefreshCount(prev => prev + 1);
+    setRefreshCount((prev) => prev + 1);
   };
 
   const showNotification = useCallback((message, color) => {
-    // Limpa qualquer timeout existente
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    
+    if (timeoutId) clearTimeout(timeoutId);
+
     setAlertMessage(message);
     setAlertColor(color);
     setShowAlert(true);
 
-    // Configura novo timeout para esconder após 2 segundos
-    const newTimeoutId = setTimeout(() => {
-      setShowAlert(false);
-    }, 2000);
-
+    const newTimeoutId = setTimeout(() => setShowAlert(false), 2000);
     setTimeoutId(newTimeoutId);
   }, [timeoutId]);
 
   const handleUserDelete = async (userId) => {
     const result = await handleDeleteUser(userId);
-
-    showNotification(
-      result.message,
-      result.success ? "success" : "error"
-    );
-
-    if (result.success) {
-      handleRefresh();
-    }
+    showNotification(result.message, result.success ? "success" : "error");
+    if (result.success) handleRefresh();
   };
 
   const handleUpdateUser = async (userId) => {
     try {
       if (userId) {
-        try {
-          const response = await getUserToDatabase(userId);
-          setUserData(response.data);
-          setUseIdUpdate(userId);
-          // const result = await saveUserToDatabase(userData, useIdUpdate);
-        } catch (error) {
-          console.log(error)
-        }
+        const response = await getUserToDatabase(userId);
+        setUserData(response.data); // Envia dados para o formulário
+        setUseIdUpdate(userId);     // Ativa o modo de edição
       }
-
-      // const result = await updateUserToDatabase(userId);
-
-      if (result.success) {
-        handleRefresh();
-      }
-
     } catch (error) {
-      return error
+      console.error("Erro ao buscar dados do usuário:", error);
+      showNotification("Erro ao carregar dados do usuário", "error");
     }
-  }
+  };
 
   useEffect(() => {
-    if (save) {
+    if (save !== null) {
       handleRefresh();
       showNotification("Operação realizada com sucesso!", "success");
-      setSave(false);
     }
   }, [save, showNotification]);
 
   useEffect(() => {
     return () => {
-      // Limpa o timeout quando o componente desmontar
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      if (timeoutId) clearTimeout(timeoutId);
     };
   }, [timeoutId]);
 
@@ -114,21 +81,14 @@ function Tables() {
                 dismissible
                 onClose={() => {
                   setShowAlert(false);
-                  if (timeoutId) {
-                    clearTimeout(timeoutId);
-                  }
+                  if (timeoutId) clearTimeout(timeoutId);
                 }}
               >
                 {alertMessage}
               </VuiAlert>
             )}
 
-            <VuiBox
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              p={3}
-            >
+            <VuiBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
               <VuiTypography variant="h6" color="white">
                 Usuários
               </VuiTypography>
@@ -167,11 +127,9 @@ function Tables() {
                   borderBottom: ({ borders: { borderWidth }, palette: { grey } }) =>
                     `${borderWidth[1]} solid ${grey[700]}`,
                 },
-                "& .MuiTableRow-root:not(:last-child)": {
-                  "& td": {
-                    borderBottom: ({ borders: { borderWidth }, palette: { grey } }) =>
-                      `${borderWidth[1]} solid ${grey[700]}`,
-                  },
+                "& .MuiTableRow-root:not(:last-child) td": {
+                  borderBottom: ({ borders: { borderWidth }, palette: { grey } }) =>
+                    `${borderWidth[1]} solid ${grey[700]}`,
                 },
                 minHeight: loading ? "200px" : "auto",
                 display: "flex",
@@ -182,19 +140,26 @@ function Tables() {
                 gap: 3
               }}
             >
-              <FormUsers save={save} setSave={setSave} userData={userData} useIdUpdate={useIdUpdate} />
+              <FormUsers
+                save={save}
+                setSave={setSave}
+                userData={userData}
+                useIdUpdate={useIdUpdate}
+                setUseIdUpdate={setUseIdUpdate}
+              />
+
               <Table
                 columns={columns}
                 rows={rows}
-                maxHeight={"450px"}
+                maxHeight="450px"
                 onDelete={handleUserDelete}
                 onUpdate={handleUpdateUser}
                 sx={{
                   width: '100%',
                   '& .MuiTableCell-root': {
                     py: 1.5,
-                    fontSize: '0.875rem'
-                  }
+                    fontSize: '0.875rem',
+                  },
                 }}
               />
             </VuiBox>
@@ -206,3 +171,4 @@ function Tables() {
 }
 
 export default Tables;
+
