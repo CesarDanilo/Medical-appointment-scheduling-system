@@ -13,6 +13,7 @@ import handleDeleteUser from "functions/deleteUserToDatabase";
 import updateUserToDatabase from "functions/updateUserToDatabase";
 import getUserToDatabase from "functions/getUserToDatabase";
 import axios from "axios";
+import saveUserToDatabase from "functions/saveUserToDatabase";
 
 function Tables() {
   const [refreshCount, setRefreshCount] = useState(0);
@@ -34,7 +35,7 @@ function Tables() {
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
-
+    
     setAlertMessage(message);
     setAlertColor(color);
     setShowAlert(true);
@@ -67,6 +68,7 @@ function Tables() {
           const response = await getUserToDatabase(userId);
           setUserData(response.data);
           setUseIdUpdate(userId);
+          // const result = await saveUserToDatabase(userData, useIdUpdate);
         } catch (error) {
           console.log(error)
         }

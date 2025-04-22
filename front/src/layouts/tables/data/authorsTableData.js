@@ -8,6 +8,7 @@ const useAuthorsTableData = (refreshFlag) => {
     columns: [
       { name: "name", align: "left" },
       { name: "email", align: "left" },
+      { name: "cpf", align: "left" },
       { name: "role", align: "center" },
       { name: "data_de_criação", align: "center" },
     ],
@@ -38,6 +39,11 @@ const useAuthorsTableData = (refreshFlag) => {
         email: (
           <VuiTypography variant="caption" color="text" fontWeight="medium">
             {user.email}
+          </VuiTypography>
+        ),
+        cpf: (
+          <VuiTypography variant="caption" color="text" fontWeight="medium">
+            {user.cpf}
           </VuiTypography>
         ),
         role: (

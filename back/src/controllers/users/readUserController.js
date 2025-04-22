@@ -22,7 +22,7 @@ const userControllers = async (req, res) => {
 
         const result = await Users.findAll({
             where,
-            attributes: ["id", "name", "email", "password", "role", "createdAt", "updatedAt"]
+            attributes: ["id", "name", "email", "password", "cpf", "role", "createdAt", "updatedAt"]
         });
 
         return res.status(200).json({ data: result });

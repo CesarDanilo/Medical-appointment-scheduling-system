@@ -16,10 +16,11 @@ const FormUsers = ({ save, setSave, userData, useIdUpdate }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [cpf, setCpf] = useState("");
     const [role, setRole] = useState("");
 
     const handleSaveUserData = async () => {
-        if (!name || !email || !password) {
+        if (!name || !email || !password || !cpf) {
             alert("Por favor, preencha todos os campos obrigatórios");
             return;
         }
@@ -28,6 +29,7 @@ const FormUsers = ({ save, setSave, userData, useIdUpdate }) => {
             name: name.trim(),
             email: email.trim(),
             password: password,
+            cpf: cpf,
             role: role
         };
 
@@ -44,6 +46,7 @@ const FormUsers = ({ save, setSave, userData, useIdUpdate }) => {
                 setName("");
                 setEmail("");
                 setPassword("");
+                setCpf("");
                 setRole("paciente");
             }
         } catch (error) {
@@ -57,6 +60,7 @@ const FormUsers = ({ save, setSave, userData, useIdUpdate }) => {
             setName(userData[0].name);
             setEmail(userData[0].email);
             setPassword(userData[0].password);
+            setCpf(userData[0].cpf);
             setRole(userData[0].role);
         }
 
@@ -109,6 +113,26 @@ const FormUsers = ({ save, setSave, userData, useIdUpdate }) => {
                         type="email"
                         fullWidth
                         onChange={(e) => setEmail(e.target.value)}
+                        sx={{
+                            backgroundColor: "transparent",
+                            "& .MuiInputBase-input": {
+                                py: 1.5,
+                                fontSize: "0.875rem"
+                            }
+                        }}
+                    />
+                </VuiBox>
+
+                <VuiBox>
+                    <VuiTypography variant="body2" color="info" textGradient mb={1}>
+                        Cpf *
+                    </VuiTypography>
+                    <VuiInput
+                        value={cpf}
+                        placeholder="Digite o cpf..."
+                        type="email"
+                        fullWidth
+                        onChange={(e) => setCpf(e.target.value)}
                         sx={{
                             backgroundColor: "transparent",
                             "& .MuiInputBase-input": {
