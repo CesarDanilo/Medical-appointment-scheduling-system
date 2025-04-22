@@ -11,6 +11,8 @@ import useAuthorsTableData from "layouts/tables/data/authorsTableData";
 import handleDeleteUser from "functions/deleteUserToDatabase";
 import getUserToDatabase from "functions/getUserToDatabase";
 
+// IMPORTS MANTIDOS...
+
 function Tables() {
   const [refreshCount, setRefreshCount] = useState(0);
   const { columns, rows, loading, error } = useAuthorsTableData(refreshCount);
@@ -24,11 +26,12 @@ function Tables() {
 
   const handleRefresh = () => {
     setRefreshCount((prev) => prev + 1);
+    const tableContainer = document.querySelector(".MuiTableBody-root");
+    if (tableContainer) tableContainer.scrollTop = 0;
   };
 
   const showNotification = useCallback((message, color) => {
     if (timeoutId) clearTimeout(timeoutId);
-
     setAlertMessage(message);
     setAlertColor(color);
     setShowAlert(true);
@@ -47,8 +50,8 @@ function Tables() {
     try {
       if (userId) {
         const response = await getUserToDatabase(userId);
-        setUserData(response.data); // Envia dados para o formulário
-        setUseIdUpdate(userId);     // Ativa o modo de edição
+        setUserData(response.data);
+        setUseIdUpdate(userId);
       }
     } catch (error) {
       console.error("Erro ao buscar dados do usuário:", error);
@@ -58,7 +61,7 @@ function Tables() {
 
   useEffect(() => {
     if (save !== null) {
-      handleRefresh();
+      handleRefresh(); // atualiza tabela ao salvar
       showNotification("Operação realizada com sucesso!", "success");
     }
   }, [save, showNotification]);
@@ -76,61 +79,35 @@ function Tables() {
         <VuiBox mb={3}>
           <Card>
             {showAlert && (
-              <VuiAlert
-                color={alertColor}
-                dismissible
-                onClose={() => {
-                  setShowAlert(false);
-                  if (timeoutId) clearTimeout(timeoutId);
-                }}
-              >
+              <VuiAlert color={alertColor} dismissible onClose={() => {
+                setShowAlert(false);
+                if (timeoutId) clearTimeout(timeoutId);
+              }}>
                 {alertMessage}
               </VuiAlert>
             )}
 
             <VuiBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-              <VuiTypography variant="h6" color="white">
-                Usuários
+              <VuiTypography variant="h6" color="white">Usuários</VuiTypography>
+              <VuiTypography
+                variant="button"
+                color="info"
+                fontWeight="medium"
+                onClick={handleRefresh}
+                sx={{ cursor: 'pointer', px: 2, py: 1, borderRadius: '5px', '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' } }}
+              >
+                {loading ? 'Atualizando...' : 'Atualizar'}
               </VuiTypography>
-              <VuiBox display="flex" alignItems="center">
-                <VuiTypography
-                  variant="button"
-                  color="info"
-                  fontWeight="medium"
-                  onClick={handleRefresh}
-                  sx={{
-                    cursor: 'pointer',
-                    px: 2,
-                    py: 1,
-                    borderRadius: '5px',
-                    '&:hover': {
-                      backgroundColor: 'rgba(0, 0, 0, 0.1)'
-                    }
-                  }}
-                >
-                  {loading ? 'Atualizando...' : 'Atualizar'}
-                </VuiTypography>
-              </VuiBox>
             </VuiBox>
 
             {error && (
               <VuiBox p={2} textAlign="center">
-                <VuiTypography variant="caption" color="error">
-                  {error}
-                </VuiTypography>
+                <VuiTypography variant="caption" color="error">{error}</VuiTypography>
               </VuiBox>
             )}
 
             <VuiBox
               sx={{
-                "& th": {
-                  borderBottom: ({ borders: { borderWidth }, palette: { grey } }) =>
-                    `${borderWidth[1]} solid ${grey[700]}`,
-                },
-                "& .MuiTableRow-root:not(:last-child) td": {
-                  borderBottom: ({ borders: { borderWidth }, palette: { grey } }) =>
-                    `${borderWidth[1]} solid ${grey[700]}`,
-                },
                 minHeight: loading ? "200px" : "auto",
                 display: "flex",
                 flexDirection: "row",
@@ -141,7 +118,6 @@ function Tables() {
               }}
             >
               <FormUsers
-                save={save}
                 setSave={setSave}
                 userData={userData}
                 useIdUpdate={useIdUpdate}
@@ -156,6 +132,7 @@ function Tables() {
                 onUpdate={handleUpdateUser}
                 sx={{
                   width: '100%',
+                  overflowY: 'auto',
                   '& .MuiTableCell-root': {
                     py: 1.5,
                     fontSize: '0.875rem',
@@ -171,4 +148,3 @@ function Tables() {
 }
 
 export default Tables;
-
